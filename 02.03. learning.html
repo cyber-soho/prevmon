@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations of Cybersecurity — Study Hub | Cyber.SoHo</title>
+<meta name="author" content="Cyber.SoHo">
+<meta name="description" content="Self-contained study hub for Class 2 of Preventative Monitoring (420-1C1-DW): flashcards and practice questions on cybersecurity, the three security properties and the lab environment.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:  { DEFAULT: '#0F4C81', dark: '#0B3A63', light: '#EAF2FA', line: '#BFD3E6' },
+          accent: { DEFAULT: '#1E7A6F', dark: '#155C54', light: '#E4F2EF' },
+          crimson: '#B3122C',
+          amber:   '#B06A00'
+        },
+        fontFamily: {
+          sans:  ['Plus Jakarta Sans', 'Calibri', 'system-ui', 'sans-serif'],
+          serif: ['Cambria', 'Georgia', 'serif']
+        }
+      }
+    }
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  body { font-family: 'Plus Jakarta Sans', Calibri, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Flashcard flip */
+  .flashcard-container { perspective: 1200px; }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+  .flashcard-inner.flipped { transform: rotateY(180deg); }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.75rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    overflow: auto;
+  }
+  .card-front { background-color: #ffffff; border: 2px solid #e2e8f0; }
+  .card-back  { transform: rotateY(180deg); background-color: #EAF2FA; border: 2px solid #0F4C81; }
+
+  .chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 300px;
+  }
+
+  /* Quiz option states */
+  .quiz-opt-btn.is-correct { border-color: #10b981 !important; background-color: #ecfdf5 !important; color: #065f46 !important; }
+  .quiz-opt-btn.is-wrong   { border-color: #f43f5e !important; background-color: #fff1f2 !important; color: #9f1239 !important; }
+  .quiz-opt-btn:disabled   { cursor: default; opacity: 0.95; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+  @media print {
+    .no-print { display: none !important; }
+    .tab-content { display: block !important; }
+  }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- ============================ HEADER ============================ -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl">🛡️</span>
+      <div class="leading-tight">
+        <h1 class="text-xl font-bold tracking-tight text-slate-800">Foundations of Cybersecurity</h1>
+        <p class="text-[11px] uppercase tracking-widest font-bold text-slate-400">Cyber.SoHo · Preventative Monitoring 420-1C1-DW</p>
+      </div>
+    </div>
+    <nav class="flex bg-slate-100 p-1 rounded-xl shadow-inner">
+      <button onclick="switchTab('dashboard')"  class="nav-btn active px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-white text-brand shadow-sm" id="btn-dashboard">Dashboard</button>
+      <button onclick="switchTab('flashcards')" class="nav-btn px-6 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900" id="btn-flashcards">Flashcards</button>
+      <button onclick="switchTab('quiz')"       class="nav-btn px-6 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900" id="btn-quiz">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
+
+  <!-- ============================ DASHBOARD ============================ -->
+  <section id="dashboard" class="tab-content active space-y-8">
+
+    <div class="bg-brand rounded-3xl p-8 text-white shadow-xl shadow-brand/20">
+      <p class="text-[11px] uppercase tracking-widest font-bold text-brand-line mb-3">Class 2 · Topic 1 · Sub-topics 1.1 and 1.2 · plus the lab environment</p>
+      <h2 class="text-3xl font-bold mb-4">Welcome back, analyst.</h2>
+      <p class="text-blue-100 max-w-2xl leading-relaxed">
+        This Study Hub contains the whole content of Class 2: what cybersecurity is, the three security properties that every
+        alert points to, and the lab environment in which every exercise of the program runs. Use the tabs above to alternate
+        between memorizing the vocabulary and testing your judgment on real situations.
+      </p>
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-4 border border-white/20">
+          <span class="text-3xl">🗂️</span>
+          <div>
+            <div class="text-xs uppercase font-bold text-blue-200 tracking-widest">Memorization</div>
+            <div class="text-lg font-bold">34 Flashcards</div>
+          </div>
+        </div>
+        <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-4 border border-white/20">
+          <span class="text-3xl">📝</span>
+          <div>
+            <div class="text-xs uppercase font-bold text-blue-200 tracking-widest">Assessment</div>
+            <div class="text-lg font-bold">10 Practice Questions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <div class="text-2xl mb-2">1️⃣</div>
+        <h3 class="font-bold text-lg mb-1">What cybersecurity is</h3>
+        <p class="text-sm text-slate-600 leading-relaxed">The definition, the six unwanted actions, and the six words of risk: asset, threat, vulnerability, risk, control, incident.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <div class="text-2xl mb-2">2️⃣</div>
+        <h3 class="font-bold text-lg mb-1">The three properties</h3>
+        <p class="text-sm text-slate-600 leading-relaxed">Confidentiality, integrity and availability — the hash, the baseline, uptime, and the high-water mark rule.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <div class="text-2xl mb-2">3️⃣</div>
+        <h3 class="font-bold text-lg mb-1">The lab environment</h3>
+        <p class="text-sm text-slate-600 leading-relaxed">Virtualization, hypervisors, network modes, the four environments of the program and the rules of a safe lab.</p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <h3 class="font-bold text-lg mb-2">Instructions</h3>
+        <ul class="space-y-3 text-sm text-slate-600">
+          <li class="flex items-start gap-2"><span>✅</span> Use <b>Flashcards</b> to master the terminology and the “What.”</li>
+          <li class="flex items-start gap-2"><span>✅</span> Take the <b>Quiz</b> to practise the “Architectural Judgment” and the “Why.”</li>
+          <li class="flex items-start gap-2"><span>✅</span> Use the hint when you hesitate, and read every rationale — including the wrong ones.</li>
+          <li class="flex items-start gap-2"><span>✅</span> Left and right arrow keys move between flashcards.</li>
+        </ul>
+      </div>
+      <div class="bg-slate-900 p-6 rounded-2xl text-white">
+        <h3 class="font-bold text-lg mb-2 text-accent">Quick Pro-Tip</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Every alert you will ever see leads to three questions: <em>was something read, was something changed, was something
+          made unreachable?</em> Answer those three, and you already know whom to inform and how urgent the matter is.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+      <h3 class="font-bold text-base mb-2 text-amber-800">⚠️ Educational material only</h3>
+      <p class="text-sm text-amber-900/90 leading-relaxed">
+        © 2026 Cyber.SoHo. All rights reserved. For use in an isolated, authorized lab environment only, against the targets that
+        each exercise designates. Applying these tools or techniques to any other system, network or data without the owner’s
+        express written authorization may be a criminal offence and is strictly prohibited.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================ FLASHCARDS ============================ -->
+  <section id="flashcards" class="tab-content space-y-8">
+    <div class="text-center">
+      <h2 class="text-2xl font-bold text-slate-800">Knowledge Cards</h2>
+      <p class="text-slate-500 text-sm mt-1">Click the card to flip it. Use the arrows — or the keyboard — to navigate.</p>
+    </div>
+
+    <div class="max-w-xl mx-auto flashcard-container">
+      <div class="flashcard-inner" id="flashcard-inner" onclick="this.classList.toggle('flipped')" role="button" tabindex="0" aria-label="Flashcard: click to flip">
+        <div class="card-front">
+          <p id="card-front-text" class="text-xl font-bold text-slate-800 leading-snug"></p>
+        </div>
+        <div class="card-back">
+          <p id="card-back-text" class="text-[15px] text-brand-dark leading-relaxed"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center gap-6">
+      <button onclick="prevCard()" class="p-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm" aria-label="Previous card">⬅️</button>
+      <div class="text-slate-400 font-mono text-sm" id="card-counter">1 / 34</div>
+      <button onclick="nextCard()" class="p-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm" aria-label="Next card">➡️</button>
+    </div>
+
+    <div class="max-w-xl mx-auto h-2 bg-slate-200 rounded-full overflow-hidden">
+      <div id="card-progress" class="h-full bg-brand transition-all duration-300" style="width: 3%"></div>
+    </div>
+
+    <div class="text-center">
+      <button onclick="shuffleCards()" class="text-xs text-brand font-bold hover:underline">🔀 Shuffle the deck</button>
+    </div>
+  </section>
+
+  <!-- ============================ QUIZ ============================ -->
+  <section id="quiz" class="tab-content space-y-8">
+
+    <div id="quiz-intro" class="text-center py-12">
+      <div class="text-5xl mb-4">🏆</div>
+      <h2 class="text-3xl font-bold text-slate-800">Ready for the Assessment?</h2>
+      <p class="text-slate-500 mt-2 mb-8 max-w-xl mx-auto">Ten situations. Test your ability to name the right property, the right concept and the right tool.</p>
+      <button onclick="startQuiz()" class="bg-brand text-white px-10 py-4 rounded-2xl font-bold shadow-lg hover:bg-brand-dark transition-transform hover:-translate-y-1">Start Quiz</button>
+    </div>
+
+    <div id="quiz-active" class="hidden max-w-2xl mx-auto space-y-6">
+      <div class="flex justify-between items-center text-sm font-bold text-slate-400">
+        <span id="quiz-progress-text">Question 1 of 10</span>
+        <span id="quiz-score-live">Score: 0</span>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+        <div id="quiz-question" class="text-xl font-bold text-slate-800 mb-6 leading-snug"></div>
+        <div id="quiz-options" class="space-y-3"></div>
+
+        <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl text-sm border leading-relaxed"></div>
+
+        <div id="quiz-hint-box" class="mt-6 text-center">
+          <button onclick="toggleHint()" id="hint-toggle-btn" class="text-xs text-brand font-bold hover:underline">Need a hint? 💡</button>
+          <p id="quiz-hint" class="hidden mt-2 text-xs text-slate-500 italic"></p>
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <button id="next-q-btn" onclick="nextQuestion()" class="hidden ml-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800">Next Question</button>
+      </div>
+    </div>
+
+    <div id="quiz-results" class="hidden text-center space-y-8 animate-fadeIn">
+      <h2 class="text-3xl font-bold text-slate-800">Assessment Complete!</h2>
+      <div class="chart-container">
+        <canvas id="resultsChart"></canvas>
+      </div>
+      <div id="result-summary" class="text-xl font-bold"></div>
+      <div id="result-verdict" class="text-sm text-slate-500 max-w-md mx-auto"></div>
+      <button onclick="resetQuiz()" class="bg-slate-200 text-slate-800 px-8 py-3 rounded-xl font-bold hover:bg-slate-300">Try Again</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-6 mt-8">
+        <div class="container mx-auto text-center text-sm">
+            <p style="display:flex; justify-content:center; align-items:center; gap:8px; margin:0;">
+				<img src="cyber_soho.png"
+					 alt="Cyber Soho"
+					 style="height:50px;">
+				<span>Educational Hub &copy; 2026 | From the Industry to the Classroom — Building the IT’s Future, Today and Together !
+				<br>ALL Rights Reserverd</br>
+			</p>
+        </div>
+    </footer>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+
+const flashcards = [
+  { front: "Define cybersecurity in one sentence.",
+    back: "The protection of computers, networks, programs and digital information against <b>unauthorized access, use, disclosure, disruption, modification and destruction</b> — by combining technologies, written procedures and the daily practices of people." },
+
+  { front: "Name the six unwanted actions of the cybersecurity definition.",
+    back: "Unauthorized <b>access</b>, <b>use</b>, <b>disclosure</b>, <b>disruption</b>, <b>modification</b> and <b>destruction</b>." },
+
+  { front: "Information security, IT security, cybersecurity — what is the difference?",
+    back: "<b>Information security</b> protects information in every form, including paper files and spoken conversations.<br><b>IT security</b> protects the computer equipment and the software.<br><b>Cybersecurity</b> protects what is digital and connected to a network — the scope of this course." },
+
+  { front: "Asset",
+    back: "Anything that has value for the organization and therefore needs protection: information, equipment, a service, or an account with its password." },
+
+  { front: "Threat",
+    back: "A possible cause of an unwanted event that can harm an asset. It can be <b>intentional</b> (a criminal group), <b>accidental</b> (a mistake), or <b>natural / technical</b> (a power failure, a dead disk). The person or group behind an intentional threat is a <b>threat actor</b>." },
+
+  { front: "Vulnerability",
+    back: "A weakness that a threat can use. Examples: software that no longer receives updates, a password shared by the whole staff, a backup nobody has ever tested, an employee who was never trained." },
+
+  { front: "Risk",
+    back: "The combination of the <b>likelihood</b> that a threat uses a vulnerability and the <b>impact</b> on the organization if it happens. Simple qualitative method: each rated 1 to 5, and <b>risk = likelihood × impact</b>." },
+
+  { front: "Control (also: safeguard, countermeasure)",
+    back: "A measure that reduces a risk. It can be <b>technical</b> (firewall, automatic updates, a second proof of identity), <b>administrative</b> (a written policy, staff training, a departure procedure) or <b>physical</b> (a locked cabinet)." },
+
+  { front: "Event, alert, incident — what is the difference?",
+    back: "<b>Event:</b> any occurrence that can be observed in a system or on a network (a sign-in, a refused connection, a disk at 80%).<br><b>Alert:</b> a message produced by a tool when events match a configured rule.<br><b>Incident:</b> an event, or a group of events, that harms or threatens information or systems, or that breaks a security rule. An alert is a question; the analysis decides." },
+
+  { front: "Preventative monitoring",
+    back: "The ongoing observation of a network in order to detect and report problems <b>before they cause damage</b>. A disk at 90%, a backup that failed last night, thirty failed sign-ins on one account: none has caused damage yet — and each one will if nobody sees it." },
+
+  { front: "Five reasons an organization of any size needs cybersecurity",
+    back: "1. The daily work depends on digital systems.<br>2. Incidents are frequent and recovery costs are rising.<br>3. It holds personal information that belongs to other people (Law 25).<br>4. Clients, insurers and partners ask for proof.<br>5. The threat is constant and does not choose by size — automated searches find a small office just as easily as a large one." },
+
+  { front: "Key Canadian figures for 2023 (Statistics Canada)",
+    back: "<b>16%</b> of businesses impacted (about 1 in 6); <b>30%</b> for large businesses; <b>50%</b> of those impacted faced scams and fraud; <b>13%</b> faced ransomware; <b>26%</b> had a written security policy; total recovery spending about <b>1.2 billion dollars</b>, double 2021; the most common security activity is <b>monitoring of network and business systems (46%)</b>." },
+
+  { front: "Law 25 — what does it require of an enterprise?",
+    back: "Every enterprise is responsible for the personal information it holds. A <b>confidentiality incident</b> that presents a risk of serious injury must be notified to the <b>CAI</b> and to the persons concerned, and every incident must be recorded in a register. Penalties reach 25 million dollars or 4% of worldwide turnover." },
+
+  { front: "Confidentiality",
+    back: "The property that information is not made available or disclosed to persons, programs or organizations that are <b>not authorized</b> to have it. Losing it = unauthorized disclosure. It is often a silent loss: nothing changes, nothing stops working." },
+
+  { front: "Integrity",
+    back: "The property that information is <b>exact and complete</b>, and that information and systems are changed only by authorized persons, in authorized ways. Losing it = unauthorized modification or destruction. A loss of integrity does not require an attacker: an accidental overwrite is one too." },
+
+  { front: "Availability",
+    back: "The property that information and systems can be reached and used by authorized persons <b>when they need them</b>, within an acceptable time. Losing it = disruption of access or of use." },
+
+  { front: "The CIA triad",
+    back: "<b>Confidentiality, Integrity, Availability</b> — the three security properties. The name has no relation to the intelligence agency: it is formed with the first letters of the three words. ISO/IEC 27000 and FIPS 199 both build on it." },
+
+  { front: "Authentication vs authorization — and least privilege",
+    back: "<b>Authentication</b> proves that a person or a program is who it claims to be (a password, a code from a telephone).<br><b>Authorization</b> states what that authenticated person may read or change.<br><b>Least privilege</b> gives each person only the rights required for her work, and nothing more." },
+
+  { front: "Encryption",
+    back: "The transformation of readable data into unreadable data with a mathematical algorithm and a key; only the holder of the right key can reverse it. It applies <b>at rest</b> (on a disk) and <b>in transit</b> (on a network). It is not the same thing as a hash: encryption hides, a hash only compares." },
+
+  { front: "A hash function — name its four properties",
+    back: "1. <b>Deterministic</b>: the same input always gives the same hash.<br>2. <b>Fixed length</b>: 256 bits, written as 64 hexadecimal characters for SHA-256.<br>3. Any change of a single character gives a <b>completely different</b> hash.<br>4. <b>One-way</b>: the input cannot be rebuilt from the hash." },
+
+  { front: "The hash of a file differs from its baseline. What does this prove — and not prove?",
+    back: "It proves <b>that</b> the content changed after the baseline was recorded.<br>It does <b>not</b> say who changed it, when, what was changed, or whether the change was approved. Those answers come from the event logs and from the people concerned." },
+
+  { front: "Baseline",
+    back: "A recorded reference of the normal or approved state, kept for later comparison — for example the hash and the permissions of the payroll file on the day of its approval." },
+
+  { front: "File integrity monitoring (FIM)",
+    back: "A tool that recomputes hashes on a schedule and raises an alert when one differs from the baseline. You will configure this kind of check in Lab 2." },
+
+  { front: "Uptime — and its arithmetic",
+    back: "The percentage of time a system answers normally.<br><b>99%</b> = 87.6 hours per year (about 3.65 days).<br><b>99.9%</b> = 8.76 hours.<br><b>99.99%</b> ≈ 53 minutes." },
+
+  { front: "RTO and RPO",
+    back: "<b>RTO (recovery time objective):</b> the longest time the organization accepts to remain without a system after an interruption.<br><b>RPO (recovery point objective):</b> the largest amount of recent work, expressed as a duration, that the organization accepts to lose. An RPO of 24 hours requires at least one backup per day." },
+
+  { front: "The 3-2-1 backup rule",
+    back: "<b>3</b> copies of the data, on <b>2</b> different kinds of storage, with <b>1</b> copy outside the office. And a backup that was never tested may be impossible to restore." },
+
+  { front: "The high-water mark rule",
+    back: "The overall impact level of an asset is the <b>highest</b> of its three levels (confidentiality, integrity, availability). An asset rated high for one property and low for the other two is a high-impact asset: one serious weakness is enough to cause serious harm." },
+
+  { front: "Virtualization, hypervisor, host and guest",
+    back: "<b>Virtualization</b> divides the resources of one physical computer (processor, memory, disk, network) among several isolated environments.<br>The <b>hypervisor</b> creates and runs those virtual machines: <b>type 1</b> sits directly on the hardware (data centres); <b>type 2</b> is an application (VirtualBox, VMware Workstation Pro).<br>The <b>host</b> is the physical computer; the <b>guest</b> is the operating system running inside a virtual machine." },
+
+  { front: "Snapshot, clone and backup — do not confuse them",
+    back: "<b>Snapshot:</b> a recorded state of a virtual machine to which you can return; take one before every exercise. It is <b>not</b> a backup, because it is stored on the same disk as the machine.<br><b>Clone:</b> an independent copy of a virtual machine, with its own name.<br><b>Backup:</b> a separate copy of the data, kept outside the machine." },
+
+  { front: "Network modes of a virtual machine — which one is used in this course?",
+    back: "<b>Host-only</b> (or an internal network) is the standard for all lab traffic: the machines reach one another and the host, and nothing leaves the computer.<br><b>NAT</b> is connected only for the time of an update, then disconnected.<br><b>Bridged is not used</b>: it would mix lab traffic with the traffic of other people, and a capture there may constitute an interception." },
+
+  { front: "Authorized Lab Environment — the three conditions",
+    back: "(a) You own it, or you are expressly permitted to use it for the exercise.<br>(b) It is disconnected from, or securely separated from, every production, institutional, corporate, public or third-party network.<br>(c) It contains no real personal data and no system belonging to a person who has not consented in writing." },
+
+  { front: "The four environments of the program",
+    back: "<b>VirtualBox</b> — free, open source, type 2, the default for Windows and Linux hosts.<br><b>VMware Workstation Pro</b> — free since November 2024, download with a free Broadcom account.<br><b>AWS Academy Learner Lab</b> — temporary cloud account by invitation, budget of credits, sessions of four hours.<br><b>CyberQuébec</b> — a cyber range, not available yet for this cohort." },
+
+  { front: "The shared responsibility model in the cloud",
+    back: "The provider secures the buildings, the hardware and the hypervisor. The <b>customer</b> secures what he places there: the operating system, the accounts, the network rules and the data. Monitoring belongs to the customer’s part." },
+
+  { front: "Host requirements for the course lab",
+    back: "Memory: <b>8 GB minimum, 16 GB recommended</b>.<br>Processor: <b>4 cores minimum, 6+ recommended</b>.<br>Hardware virtualization (<b>Intel VT-x</b> / <b>AMD-V</b>) <b>enabled in the UEFI settings</b> — otherwise a 64-bit guest does not start.<br>Free disk: <b>80 GB minimum, 100 GB+ recommended</b>, on a solid-state drive.<br>One type 2 hypervisor." }
+];
+
+const quizQuestions = [
+  {
+    question: "Which sentence is the best definition of cybersecurity, as used in this course?",
+    hint: "The definition names six unwanted actions, and its central word is “unauthorized.”",
+    options: [
+      { text: "The installation of antivirus software on every computer of an organization.", isCorrect: false,
+        rationale: "Antivirus software is one technical control. Cybersecurity combines technologies, procedures and the practices of people." },
+      { text: "The protection of computers, networks, programs and digital information against unauthorized access, use, disclosure, disruption, modification and destruction.", isCorrect: true,
+        rationale: "That is the working definition of the lesson. It follows the wording of the Canadian Centre for Cyber Security and of the NIST glossary." },
+      { text: "The investigation of computer crimes after they have happened.", isCorrect: false,
+        rationale: "An investigation is a response activity. Cybersecurity also covers prevention and detection." },
+      { text: "The protection of information in every form, including paper files and spoken conversations.", isCorrect: false,
+        rationale: "That describes information security, which is wider. Cybersecurity covers what is digital and connected to a network." }
+    ]
+  },
+  {
+    question: "At Grey Pine, the whole staff uses one password for the accounting application. In the vocabulary of risk, the fact that this password is shared is:",
+    hint: "Decide whether it is something of value, a possible cause of harm, a weakness, or a measure that reduces a risk.",
+    options: [
+      { text: "a threat.", isCorrect: false,
+        rationale: "A threat is a possible cause of an unwanted event — for example a criminal who tries to obtain the password." },
+      { text: "a vulnerability.", isCorrect: true,
+        rationale: "A shared password is a weakness that a threat can use. It also removes the ability to know who did what." },
+      { text: "an asset.", isCorrect: false,
+        rationale: "The account and the data of the application are assets. The fact that the password is shared is a weakness of that asset." },
+      { text: "a control.", isCorrect: false,
+        rationale: "A control reduces a risk. A shared password increases it. One account per person would be a control." }
+    ]
+  },
+  {
+    question: "Asset X has an impact of 3 and an exposure of 4. Asset Y has an impact of 5 and an exposure of 2. With the method of this lesson, which statement is correct?",
+    hint: "Score = impact × exposure. The bands are: 15 or more, 8 to 14, 7 or less.",
+    options: [
+      { text: "Y comes first, because its impact is the highest.", isCorrect: false,
+        rationale: "The method multiplies the two ratings. An asset with a very high impact can come second when it is hard to reach." },
+      { text: "X comes first with a score of 12; Y has a score of 10; both are in the medium band.", isCorrect: true,
+        rationale: "3 × 4 = 12 and 5 × 2 = 10. Both scores lie between 8 and 14." },
+      { text: "X is in the high band.", isCorrect: false,
+        rationale: "The high band starts at 15. A score of 12 is in the medium band." },
+      { text: "Both assets have the same score, so their order does not matter.", isCorrect: false,
+        rationale: "The scores are 12 and 10 — they are different." }
+    ]
+  },
+  {
+    question: "The monitoring tool displays: “five failed sign-ins on the owner’s account in one minute.” What is this message, exactly?",
+    hint: "Ask who produced the message: the system itself, or a tool that applies a rule?",
+    options: [
+      { text: "An incident, because a security rule was broken.", isCorrect: false,
+        rationale: "Not yet. The owner may simply have typed the wrong password five times. Only the analysis establishes an incident." },
+      { text: "An alert: several events matched a configured rule, and the analysis must now decide whether it is an incident.", isCorrect: true,
+        rationale: "Each failed sign-in is an event. The tool produced the alert because five of them matched its rule." },
+      { text: "A vulnerability of the owner’s account.", isCorrect: false,
+        rationale: "A vulnerability is a weakness. This message reports observed activity, not a weakness." },
+      { text: "A single event.", isCorrect: false,
+        rationale: "There are five events. The message is what the tool produced when they matched the rule." }
+    ]
+  },
+  {
+    question: "A bookkeeper sends the tax return of one client, by e-mail, to another client. Nothing in the file was changed, and every system works. Which property is lost?",
+    hint: "Ask the three questions: was something read, was something changed, was something made unreachable?",
+    options: [
+      { text: "Confidentiality.", isCorrect: true,
+        rationale: "Information reached a person who was not authorized to have it. In Québec this is also a confidentiality incident in the sense of the law." },
+      { text: "Integrity.", isCorrect: false,
+        rationale: "The content of the file is unchanged." },
+      { text: "Availability.", isCorrect: false,
+        rationale: "The file and the systems remain reachable." },
+      { text: "None, because no attacker is involved.", isCorrect: false,
+        rationale: "The loss of a property does not require an attacker. A mistake is enough." }
+    ]
+  },
+  {
+    question: "On September 17, the hash of payroll_2026-09.csv differs from the baseline recorded on September 15. What does this prove?",
+    hint: "A hash depends on one thing only: the content of the file.",
+    options: [
+      { text: "That the account of the owner was stolen.", isCorrect: false,
+        rationale: "A hash says nothing about accounts. The logs may answer that question." },
+      { text: "That the content of the file changed after the baseline was recorded.", isCorrect: true,
+        rationale: "One changed character gives a completely different hash. Who, when and why remain to be established." },
+      { text: "That the file was encrypted by ransomware.", isCorrect: false,
+        rationale: "A hash does not describe the kind of change. In the example, a row was added." },
+      { text: "That an unauthorized person read the file.", isCorrect: false,
+        rationale: "Reading a file does not change its hash. The hash tests integrity, not confidentiality." }
+    ]
+  },
+  {
+    question: "For three hours, the Internet link of Grey Pine is saturated by requests coming from thousands of computers. The staff cannot reach the cloud accounting application. Which property is lost, and what is this attack called?",
+    hint: "Nothing was read and nothing was changed. Authorized people simply cannot use the service.",
+    options: [
+      { text: "Integrity; ransomware.", isCorrect: false,
+        rationale: "Ransomware alters files by encrypting them. Here no data is altered." },
+      { text: "Availability; a DDoS (distributed denial of service) attack.", isCorrect: true,
+        rationale: "Many computers send requests at the same time until the link or the service can no longer answer." },
+      { text: "Confidentiality; a fraudulent e-mail.", isCorrect: false,
+        rationale: "No information is disclosed in this situation." },
+      { text: "Confidentiality; identity theft.", isCorrect: false,
+        rationale: "No identity information is obtained in this situation." }
+    ]
+  },
+  {
+    question: "The router RTR01 is rated low for confidentiality, high for integrity and high for availability. What is its overall level with the high-water mark rule?",
+    hint: "One serious weakness is enough to cause serious harm.",
+    options: [
+      { text: "Low, because the lowest level decides.", isCorrect: false,
+        rationale: "The rule keeps the highest level, not the lowest." },
+      { text: "Moderate, the average of the three levels.", isCorrect: false,
+        rationale: "The rule does not compute an average." },
+      { text: "High, the highest of the three levels.", isCorrect: true,
+        rationale: "One altered rule opens the whole network, and without the router nobody reaches the cloud application." },
+      { text: "It cannot be rated, because the three levels differ.", isCorrect: false,
+        rationale: "The three levels often differ. The rule exists precisely for that case." }
+    ]
+  },
+  {
+    question: "You prepare monitor01 and server01 for an exercise that captures their traffic. Which network mode do you choose for the two virtual machines?",
+    hint: "Lab traffic must stay inside the host computer.",
+    options: [
+      { text: "Bridged, so that they receive their addresses from the home router.", isCorrect: false,
+        rationale: "The machines would join the home network, and a capture could record the communications of other people." },
+      { text: "Host-only.", isCorrect: true,
+        rationale: "The two machines reach each other and the host, and nothing leaves the computer." },
+      { text: "NAT, because it is the default mode.", isCorrect: false,
+        rationale: "In this mode, two VirtualBox machines do not see each other, and the exercise does not need the Internet." },
+      { text: "No network adapter at all.", isCorrect: false,
+        rationale: "Without a network there is no traffic to monitor." }
+    ]
+  },
+  {
+    question: "In the AWS Academy Learner Lab, what happens to your running virtual servers when the session of four hours ends?",
+    hint: "The Learner Lab protects your budget of credits.",
+    options: [
+      { text: "They are deleted with all their data.", isCorrect: false,
+        rationale: "Your work is kept from one session to the next, as long as the budget is not spent." },
+      { text: "They are stopped, and they start again with your next session; your work is kept.", isCorrect: true,
+        rationale: "Stopping them prevents the budget from being spent while you are away." },
+      { text: "They keep running, and your credit card is charged.", isCorrect: false,
+        rationale: "The Learner Lab asks for no credit card." },
+      { text: "They are moved to the CyberQuébec range.", isCorrect: false,
+        rationale: "The two environments are independent, and the range is not available yet." }
+    ]
+  }
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let currentCardIndex = 0;
+let deck = flashcards.slice();
+let currentQuizIndex = 0;
+let quizScore = 0;
+let resultsChart = null;
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('bg-white', 'text-brand', 'shadow-sm', 'active');
+    b.classList.add('text-slate-600');
+  });
+
+  const activeBtn = document.getElementById('btn-' + tabId);
+  activeBtn.classList.add('bg-white', 'text-brand', 'shadow-sm', 'active');
+  activeBtn.classList.remove('text-slate-600');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* =========================================================
+   FLASHCARDS
+   ========================================================= */
+function updateCard() {
+  const card = deck[currentCardIndex];
+  const inner = document.getElementById('flashcard-inner');
+  inner.classList.remove('flipped');
+
+  setTimeout(() => {
+    document.getElementById('card-front-text').innerHTML = card.front;
+    document.getElementById('card-back-text').innerHTML = card.back;
+    document.getElementById('card-counter').innerText = (currentCardIndex + 1) + ' / ' + deck.length;
+    document.getElementById('card-progress').style.width = (((currentCardIndex + 1) / deck.length) * 100) + '%';
+  }, 150);
+}
+
+function nextCard() {
+  currentCardIndex = (currentCardIndex + 1) % deck.length;
+  updateCard();
+}
+
+function prevCard() {
+  currentCardIndex = (currentCardIndex - 1 + deck.length) % deck.length;
+  updateCard();
+}
+
+function shuffleCards() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  currentCardIndex = 0;
+  updateCard();
+}
+
+/* Keyboard navigation for flashcards */
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('flashcards').classList.contains('active')) return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); nextCard(); }
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); prevCard(); }
+});
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+function startQuiz() {
+  document.getElementById('quiz-intro').classList.add('hidden');
+  document.getElementById('quiz-active').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizQuestions[currentQuizIndex];
+  document.getElementById('quiz-question').innerText = q.question;
+  document.getElementById('quiz-progress-text').innerText = 'Question ' + (currentQuizIndex + 1) + ' of ' + quizQuestions.length;
+  document.getElementById('quiz-hint').innerText = q.hint;
+  document.getElementById('quiz-hint').classList.add('hidden');
+  document.getElementById('hint-toggle-btn').innerText = 'Need a hint? 💡';
+
+  const optionsBox = document.getElementById('quiz-options');
+  optionsBox.innerHTML = '';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-brand-line hover:bg-brand-light transition-all text-slate-700 font-medium quiz-opt-btn';
+    btn.innerText = opt.text;
+    btn.onclick = () => selectOption(idx);
+    optionsBox.appendChild(btn);
+  });
+
+  document.getElementById('quiz-feedback').classList.add('hidden');
+  document.getElementById('next-q-btn').classList.add('hidden');
+}
+
+function selectOption(idx) {
+  const q = quizQuestions[currentQuizIndex];
+  const selected = q.options[idx];
+  const feedbackBox = document.getElementById('quiz-feedback');
+  const buttons = document.querySelectorAll('.quiz-opt-btn');
+
+  buttons.forEach((b, i) => {
+    b.disabled = true;
+    if (q.options[i].isCorrect) b.classList.add('is-correct');
+  });
+  if (!selected.isCorrect) buttons[idx].classList.add('is-wrong');
+
+  feedbackBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+
+  if (selected.isCorrect) {
+    quizScore++;
+    feedbackBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+    feedbackBox.innerHTML = '<strong>Correct!</strong> ' + selected.rationale;
+  } else {
+    feedbackBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
+    feedbackBox.innerHTML = '<strong>Incorrect.</strong> ' + selected.rationale;
+  }
+
+  document.getElementById('quiz-score-live').innerText = 'Score: ' + quizScore;
+  document.getElementById('next-q-btn').classList.remove('hidden');
+  document.getElementById('next-q-btn').innerText = (currentQuizIndex < quizQuestions.length - 1) ? 'Next Question' : 'See My Results';
+}
+
+function toggleHint() {
+  const hint = document.getElementById('quiz-hint');
+  const btn = document.getElementById('hint-toggle-btn');
+  if (hint.classList.contains('hidden')) {
+    hint.classList.remove('hidden');
+    btn.innerText = 'Hide hint';
+  } else {
+    hint.classList.add('hidden');
+    btn.innerText = 'Need a hint? 💡';
+  }
+}
+
+function nextQuestion() {
+  if (currentQuizIndex < quizQuestions.length - 1) {
+    currentQuizIndex++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-active').classList.add('hidden');
+  document.getElementById('quiz-results').classList.remove('hidden');
+
+  const total = quizQuestions.length;
+  const pct = Math.round((quizScore / total) * 100);
+
+  document.getElementById('result-summary').innerText = 'You scored ' + quizScore + ' out of ' + total + '  ·  ' + pct + '%';
+
+  let verdict = '';
+  if (pct === 100)      verdict = 'Excellent. You can name the property, the concept and the tool for every situation. Move on to the Lab 1 preparation with confidence.';
+  else if (pct >= 80)   verdict = 'Strong result. Re-read the rationales of the questions you missed, then review the flashcards on those themes.';
+  else if (pct >= 60)   verdict = 'A fair base. Go back to Lesson 2 (the three properties) and Lesson 3 (the network modes) before the next class.';
+  else                  verdict = 'Take the flashcards again from the beginning, then retake this quiz. Focus on the vocabulary of risk and on the three properties.';
+  document.getElementById('result-verdict').innerText = verdict;
+
+  const ctx = document.getElementById('resultsChart').getContext('2d');
+  if (resultsChart) resultsChart.destroy();
+
+  resultsChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Correct', 'Incorrect'],
+      datasets: [{
+        data: [quizScore, total - quizScore],
+        backgroundColor: ['#1E7A6F', '#B3122C'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { family: 'Plus Jakarta Sans', weight: '600' }, padding: 18 } }
+      }
+    }
+  });
+}
+
+function resetQuiz() {
+  quizScore = 0;
+  currentQuizIndex = 0;
+  document.getElementById('quiz-results').classList.add('hidden');
+  document.getElementById('quiz-intro').classList.remove('hidden');
+  document.getElementById('quiz-score-live').innerText = 'Score: 0';
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+updateCard();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundations of Cybersecurity — Study Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Flashcard Flip Animation */
+        .flashcard-container { perspective: 1000px; }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .flashcard-inner.flipped { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            overflow-y: auto;
+        }
+        .card-back { transform: rotateY(180deg); background-color: #ecfdf5; border: 2px solid #0f4c81; }
+        .card-front { background-color: white; border: 2px solid #e2e8f0; }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            height: 300px;
+        }
+
+        .msq-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 2px 10px;
+            border-radius: 999px;
+            background-color: #fef3c7;
+            color: #92400e;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .quiz-opt-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .quiz-opt-row input {
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            flex: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🛡️</span>
+                <h1 class="text-xl font-bold tracking-tight text-slate-800">Foundations of Cybersecurity — Study Hub</h1>
+            </div>
+            <nav class="flex bg-slate-100 p-1 rounded-xl shadow-inner">
+                <button onclick="switchTab('dashboard')" class="nav-btn active px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-white text-indigo-600 shadow-sm" id="btn-dashboard">Dashboard</button>
+                <button onclick="switchTab('flashcards')" class="nav-btn px-6 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900" id="btn-flashcards">Flashcards</button>
+                <button onclick="switchTab('quiz')" class="nav-btn px-6 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900" id="btn-quiz">Quiz</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
+
+        <section id="dashboard" class="tab-content active space-y-8">
+            <div class="bg-indigo-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-100">
+                <h2 class="text-3xl font-bold mb-4">Welcome back, Defender.</h2>
+                <p class="text-indigo-100 max-w-2xl leading-relaxed">
+                    This Study Hub covers Lesson 1.3 (Common Types of Cyberattacks) and Lesson 1.4 (Basic Cyber Defense Concepts: Prevention, Detection, Response) from <strong>Foundations of Cybersecurity</strong>. Use the tabs above to toggle between memorizing terms and testing your monitoring judgment.
+                </p>
+                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-indigo-500/30 p-4 rounded-2xl flex items-center gap-4 border border-indigo-400/30">
+                        <span class="text-3xl">🗂️</span>
+                        <div>
+                            <div class="text-xs uppercase font-bold text-indigo-200 tracking-widest">Memorization</div>
+                            <div class="text-lg font-bold">10 Flashcards</div>
+                        </div>
+                    </div>
+                    <div class="bg-indigo-500/30 p-4 rounded-2xl flex items-center gap-4 border border-indigo-400/30">
+                        <span class="text-3xl">📝</span>
+                        <div>
+                            <div class="text-xs uppercase font-bold text-indigo-200 tracking-widest">Assessment</div>
+                            <div class="text-lg font-bold">12 Practice Questions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-lg mb-2">Instructions</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><span>✅</span> Use Flashcards to master the terms: vulnerability, threat, attack vector, controls and more.</li>
+                        <li class="flex items-start gap-2"><span>✅</span> Take the Quiz to practice recognizing attacks and defense functions from realistic log traces.</li>
+                        <li class="flex items-start gap-2"><span>✅</span> Questions marked <span class="msq-badge">MSQ</span> require <strong>more than one</strong> correct answer — the exact number expected is shown in round brackets right after the question, e.g. "(Select 3 answers)". Select exactly that many before submitting.</li>
+                        <li class="flex items-start gap-2"><span>✅</span> Complete the quiz to see your data-driven performance breakdown.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-900 p-6 rounded-2xl text-white">
+                    <h3 class="font-bold text-lg mb-2 text-indigo-400">Quick Pro-Tip</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Every attack leaves a trace in a specific data source: server logs, firewall logs, workstation alerts, or the file audit. As you study, ask yourself: which log would show this, and what would the entry look like?
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="flashcards" class="tab-content space-y-8">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-slate-800">Knowledge Cards</h2>
+                <p class="text-slate-500 text-sm mt-1">Click the card to flip it, use the arrows to navigate.</p>
+            </div>
+
+            <div class="max-w-md mx-auto flashcard-container">
+                <div class="flashcard-inner" id="flashcard-inner" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">
+                        <p id="card-front-text" class="text-lg font-bold text-slate-800"></p>
+                    </div>
+                    <div class="card-back">
+                        <p id="card-back-text" class="text-base text-emerald-900 leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-6">
+                <button onclick="prevCard()" class="p-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">⬅️</button>
+                <div class="text-slate-400 font-mono text-sm" id="card-counter">1 / 10</div>
+                <button onclick="nextCard()" class="p-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">➡️</button>
+            </div>
+
+            <div class="max-w-md mx-auto h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div id="card-progress" class="h-full bg-indigo-500 transition-all duration-300" style="width: 10%"></div>
+            </div>
+        </section>
+
+        <section id="quiz" class="tab-content space-y-8">
+            <div id="quiz-intro" class="text-center py-12">
+                <div class="text-5xl mb-4">🏆</div>
+                <h2 class="text-3xl font-bold text-slate-800">Ready for the Assessment?</h2>
+                <p class="text-slate-500 mt-2 mb-8">Test your ability to recognize cyberattacks and cyber defense functions from realistic monitoring scenarios.</p>
+                <button onclick="startQuiz()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-transform hover:-translate-y-1">Start Quiz</button>
+            </div>
+
+            <div id="quiz-active" class="hidden max-w-2xl mx-auto space-y-6">
+                <div class="flex justify-between items-center text-sm font-bold text-slate-400">
+                    <span id="quiz-progress-text">Question 1 of 12</span>
+                    <span id="quiz-score-live">Score: 0</span>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                    <div id="quiz-question" class="text-xl font-bold text-slate-800 mb-6"></div>
+                    <div id="quiz-options" class="space-y-3"></div>
+
+                    <div id="quiz-submit-box" class="hidden mt-4">
+                        <button onclick="submitMsq()" id="msq-submit-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed">Submit answer</button>
+                        <p id="msq-count-note" class="text-xs text-slate-400 mt-2"></p>
+                    </div>
+
+                    <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl text-sm border"></div>
+
+                    <div id="quiz-hint-box" class="mt-6 text-center">
+                        <button onclick="toggleHint()" id="hint-toggle-btn" class="text-xs text-indigo-500 font-bold hover:underline">Need a hint? 💡</button>
+                        <p id="quiz-hint" class="hidden mt-2 text-xs text-slate-500 italic"></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button id="next-q-btn" onclick="nextQuestion()" class="hidden ml-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800">Next Question</button>
+                </div>
+            </div>
+
+            <div id="quiz-results" class="hidden text-center space-y-8 animate-fadeIn">
+                <h2 class="text-3xl font-bold text-slate-800">Assessment Complete!</h2>
+                <div class="chart-container">
+                    <canvas id="resultsChart"></canvas>
+                </div>
+                <div id="result-summary" class="text-xl font-bold"></div>
+                <button onclick="resetQuiz()" class="bg-slate-200 text-slate-800 px-8 py-3 rounded-xl font-bold hover:bg-slate-300">Try Again</button>
+            </div>
+        </section>
+
+    </main>
+
+<!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-6 mt-8">
+        <div class="container mx-auto text-center text-sm">
+            <p style="display:flex; justify-content:center; align-items:center; gap:8px; margin:0;">
+				<img src="cyber_soho.png"
+					 alt="Cyber Soho"
+					 style="height:50px;">
+				<span>Educational Hub &copy; 2026 | From the Industry to the Classroom — Building the IT’s Future, Today and Together !
+				<br>ALL Rights Reserverd</br>
+			</p>
+        </div>
+    </footer>
+
+    <script>
+        // DATA
+        const flashcards = [{"front": "Vulnerability, threat, threat actor: what is the difference?", "back": "A <b>vulnerability</b> is a weakness: a missing update, a weak password, an untrained employee. A <b>threat</b> is a circumstance or event that can cause harm by using a vulnerability. A <b>threat actor</b> is the person or group behind the threat."}, {"front": "Brute force or password spraying: which pattern is which?", "back": "<b>Brute force:</b> many passwords against ONE account. <b>Password spraying:</b> one or two common passwords against MANY accounts, so that no account reaches the lockout limit. In the log: many failures on one account, versus one failure on each of many accounts, from one source."}, {"front": "Which properties of the <strong class=\"ab\">CIA</strong> (Confidentiality, Integrity, Availability) triad does ransomware harm?", "back": "<b>Availability</b>, because the files are encrypted and cannot be used. Often <b>confidentiality</b> as well, because many groups copy the files before they encrypt them and threaten to publish them."}, {"front": "Virus, worm, trojan: how does each one behave?", "back": "A <b>virus</b> attaches itself to a legitimate file and runs when the user opens it. A <b>worm</b> copies itself through the network without any action from a user. A <b>trojan</b> presents itself as a useful program and performs a hidden harmful function."}, {"front": "What do Windows Security events 4625 and 4624 mean for monitoring?", "back": "<b>4625:</b> an account failed to log on. A series of 4625 from one source is the trace of a password attack. <b>4624:</b> an account was successfully logged on. A 4624 that follows many 4625 from the same source may be a compromised account."}, {"front": "What are the three functions of cyber defense, and when does each one act?", "back": "<b>Prevention</b> acts before the attack succeeds (preventive controls). <b>Detection</b> acts during the attack or shortly after it (detective controls). <b>Response</b> acts after the incident is confirmed (corrective controls)."}, {"front": "Give four reasons why prevention alone is never sufficient.", "back": "1. A zero-day attack uses a vulnerability with no update yet. 2. People make errors: one deceived employee is enough. 3. An insider already holds authorized access. 4. Resources are limited: some systems are always less protected."}, {"front": "Event, alert, incident: what is the difference?", "back": "An <b>event</b> is any recorded occurrence. An <b>alert</b> is a notification produced by a detection rule. An <b>incident</b> is an event, or a group of events, that a person has analysed and confirmed as harmful."}, {"front": "False positive, false negative: which is which?", "back": "A <b>false positive</b> is an alert raised for a legitimate activity. A <b>false negative</b> is a real attack for which no alert was raised. Adjusting the rules to reduce both is called <b>tuning</b>."}, {"front": "Name the five steps of incident response used in this course. What is the part of the technician?", "back": "Preparation; analysis; containment; eradication and recovery; lessons learned. The technician detects, analyses, documents and reports. A containment action needs the approval of the person responsible for the system."}];
+
+        const quizQuestions = [{"type": "mcq", "question": "A server log shows 40 failed logons in 60 seconds, all on the account administrator, all from one external address. Which attack type matches this pattern?", "hint": "Count two things: how many accounts are targeted, and how many attempts each account receives.", "need": 1, "options": [{"text": "Password spraying", "isCorrect": false, "rationale": "Spraying tries one or two passwords against MANY accounts. Here a single account receives all the attempts."}, {"text": "Brute-force attack", "isCorrect": true, "rationale": "Many passwords are tried against one account, by a program, from one source. This is the definition given in attack type 4."}, {"text": "Phishing", "isCorrect": false, "rationale": "Phishing is a fraudulent message sent to a person. It does not produce a series of failed logons on a server."}, {"text": "Denial of service", "isCorrect": false, "rationale": "A denial of service tries to make the service unavailable by the volume of requests. Here the objective is a valid password, and 40 logons in a minute do not exhaust a server."}]}, {"type": "mcq", "question": "An employee receives an e-mail that seems to come from the bank of the company. It uses her name, quotes a real invoice number, and asks her to confirm her password on a linked page. What is the most precise name of this attack?", "hint": "The message is written for one specific person and uses real details about her work.", "need": 1, "options": [{"text": "Credential stuffing", "isCorrect": false, "rationale": "Credential stuffing tries pairs of names and passwords stolen from another website. No message is sent to a person."}, {"text": "On-path attack", "isCorrect": false, "rationale": "An on-path attack places a device between two parties that communicate. Nothing in the scenario describes intercepted traffic."}, {"text": "Spear phishing", "isCorrect": true, "rationale": "It is a phishing message written for one specific person, with real names and real details."}, {"text": "Trojan", "isCorrect": false, "rationale": "A trojan is a program with a hidden harmful function. Here there is no program: there is a false page that asks for a password."}]}, {"type": "mcq", "question": "During the night, at 02:10, one user account modifies 900 files on the file server in four minutes, and the files receive a new, unknown extension. Which attack does this trace indicate, and which property is harmed first?", "hint": "Think of what happens to files that an attacker makes unreadable in order to demand a payment.", "need": 1, "options": [{"text": "Ransomware; availability", "isCorrect": true, "rationale": "Mass modification of files by one account and unknown extensions are the traces of ransomware given in the lesson. The files become unreadable: availability."}, {"text": "Injection in a database; integrity", "isCorrect": false, "rationale": "An injection appears in the log of a web server as database keywords in a form field. It does not rename files on a file server."}, {"text": "Reconnaissance; no property", "isCorrect": false, "rationale": "Reconnaissance collects information and harms nothing directly. Here 900 files were changed."}, {"text": "Distributed denial of service; availability", "isCorrect": false, "rationale": "The property is right, the attack is not. A distributed denial of service shows a very high incoming traffic from very many sources, not file modifications."}]}, {"type": "mcq", "question": "Which statement describes an attack vector?", "hint": "One of the four answers is a path. The three others are a total, a weakness and a person.", "need": 1, "options": [{"text": "The total of all the points where an attacker can try to enter", "isCorrect": false, "rationale": "This is the attack surface."}, {"text": "A weakness that can be used to cause harm", "isCorrect": false, "rationale": "This is a vulnerability."}, {"text": "The person or the group that carries out the attack", "isCorrect": false, "rationale": "This is the threat actor."}, {"text": "The path used to reach the target, for example an e-mail attachment", "isCorrect": true, "rationale": "This is the definition of the lesson: e-mail message, web form, remote logon service, removable key, stolen laptop."}]}, {"type": "msq", "question": "Which of the following are forms of password attack studied in Lesson 1.3?", "hint": "Four of the six try to obtain a valid account name and password. One of the two others redirects traffic; the other collects information about the network.", "need": 4, "options": [{"text": "<strong class=\"ab\">ARP</strong> (Address Resolution Protocol) spoofing", "isCorrect": false, "rationale": "It is a method of the on-path attack: it redirects traffic, it does not guess passwords."}, {"text": "Brute-force attack", "isCorrect": true, "rationale": "Many passwords against one account."}, {"text": "Dictionary attack", "isCorrect": true, "rationale": "A faster variant of brute force that tries the words of a prepared list."}, {"text": "Network scanning", "isCorrect": false, "rationale": "It is the technical form of reconnaissance: it collects information about addresses and ports."}, {"text": "Password spraying", "isCorrect": true, "rationale": "One or two common passwords against many accounts."}, {"text": "Credential stuffing", "isCorrect": true, "rationale": "Pairs of names and passwords stolen from another website."}]}, {"type": "msq", "question": "Which of these observations does Lesson 1.3 give as traces of malware, ransomware included?", "hint": "Three of the observations concern files or a workstation. The three others are seen in the firewall log, in the web server log and on the network switch.", "need": 3, "options": [{"text": "One external source tries many ports within a few seconds", "isCorrect": false, "rationale": "This is the trace of reconnaissance, seen in the firewall log."}, {"text": "One account modifies hundreds of files in a few minutes", "isCorrect": true, "rationale": "Trace of ransomware on a file server."}, {"text": "Database keywords inside a form field", "isCorrect": false, "rationale": "This is the trace of an injection, seen in the log of the web server."}, {"text": "Files receive a new, unknown extension", "isCorrect": true, "rationale": "Trace of ransomware: the encrypted files are renamed."}, {"text": "An antivirus alert on a workstation", "isCorrect": true, "rationale": "The alert on the workstation often comes shortly before the damage on the server."}, {"text": "The same <strong class=\"ab\">IP</strong> (Internet Protocol) address associated with two different hardware addresses", "isCorrect": false, "rationale": "This is the trace of an on-path attack on the local network."}]}, {"type": "mcq", "question": "In Example 2, the account lockout policy never reacted to the password spraying. Why?", "hint": "Compare what each control counts: one counts per account, the other counts per source address.", "need": 1, "options": [{"text": "Because the lockout counts failed logons per source address", "isCorrect": false, "rationale": "It is the detection rule that counts per source address. The lockout counts per account."}, {"text": "Because the spraying came from a workstation inside the office", "isCorrect": false, "rationale": "It came from 198.51.100.77, an external address."}, {"text": "Because the lockout counts failed logons per account, and the spraying produced only one failure per account", "isCorrect": true, "rationale": "Five accounts received one failure each. No account came near the limit of five in a row."}, {"text": "Because the lockout limit had already been reached by the brute-force attack", "isCorrect": false, "rationale": "The earlier lockout concerned the account administrator only. It does not switch the policy off for the other accounts."}]}, {"type": "mcq", "question": "On a Monday morning, after her vacation, an accountant types a wrong password six times, and the monitoring tool raises an alert. The activity is legitimate. What is this alert called?", "hint": "The rule said attack. The reality was no attack.", "need": 1, "options": [{"text": "A false positive", "isCorrect": true, "rationale": "An alert raised for a legitimate activity."}, {"text": "A false negative", "isCorrect": false, "rationale": "A false negative is the opposite: a real attack for which no alert was raised."}, {"text": "An incident", "isCorrect": false, "rationale": "An incident is confirmed as harmful after the analysis by a person. Here the analysis shows a legitimate activity."}, {"text": "A baseline", "isCorrect": false, "rationale": "A baseline is the recorded description of normal activity. It is not an alert."}]}, {"type": "mcq", "question": "Which of the following is a detective control?", "hint": "A detective control makes an attack visible. It does not block, and it does not repair.", "need": 1, "options": [{"text": "Multi-factor authentication", "isCorrect": false, "rationale": "It is a preventive control: it makes a stolen password insufficient."}, {"text": "Restoring files from an offline backup", "isCorrect": false, "rationale": "It is a corrective control, used during recovery."}, {"text": "Account lockout after five failed logons in a row", "isCorrect": false, "rationale": "It is a preventive control: it stops the guessing."}, {"text": "A rule that raises an alert at five failed logons from one source within ten minutes", "isCorrect": true, "rationale": "It makes the attack visible. It blocks nothing and repairs nothing."}]}, {"type": "mcq", "question": "A monitoring technician confirms that an external address is attacking the file server of the organization. According to this lesson, what does the technician do first?", "hint": "The competency says: under supervision. Which answer respects this and still loses no time?", "need": 1, "options": [{"text": "Adds a firewall rule that blocks the address, then informs the supervisor", "isCorrect": false, "rationale": "A containment action changes the system and can interrupt legitimate users. It needs the approval of the person responsible for the system."}, {"text": "Documents the observation and reports it at once to the supervisor, with a recommended action", "isCorrect": true, "rationale": "The technician detects, analyses, documents and reports. The report leaves at once, because the time available is short."}, {"text": "Sends connection requests to the attacking address in order to identify it", "isCorrect": false, "rationale": "Acting against a system that you do not own is prohibited by the Legal Notice (sections 6.3 and 7.4) and may be a criminal offence."}, {"text": "Waits for the next scheduled review of the logs", "isCorrect": false, "rationale": "In Example 2 the office had less than fifteen minutes between the alert and the compromise."}]}, {"type": "msq", "question": "Which of the following are preventive controls named in Lesson 1.4?", "hint": "Four of the six act before the attack succeeds. One acts during the attack, one after the incident.", "need": 4, "options": [{"text": "Security updates", "isCorrect": true, "rationale": "They correct known vulnerabilities before they are used."}, {"text": "An incident note sent to the supervisor", "isCorrect": false, "rationale": "It belongs to response."}, {"text": "Multi-factor authentication", "isCorrect": true, "rationale": "A stolen password alone is no longer sufficient."}, {"text": "The principle of least privilege", "isCorrect": true, "rationale": "It limits what a compromised account or a dishonest insider can reach."}, {"text": "An alert raised by a <strong class=\"ab\">SIEM</strong> (Security Information and Event Management) platform", "isCorrect": false, "rationale": "It belongs to detection."}, {"text": "Awareness training", "isCorrect": true, "rationale": "It teaches employees to recognize phishing."}]}, {"type": "msq", "question": "According to Lesson 1.4 and Example 2, what does detection need in order to have an effect?", "hint": "The definition of detection lists three elements. Example 2 adds a fourth: an alert that nobody reads.", "need": 4, "options": [{"text": "The approval of the <strong class=\"ab\">CAI</strong> (Commission d'accès à l'information du Québec) before each alert", "isCorrect": false, "rationale": "The Commission receives notices of confidentiality incidents that present a risk of serious injury. It plays no part in raising alerts."}, {"text": "Data sources, such as event logs and network traffic", "isCorrect": true, "rationale": "First element of the definition: without data, there is nothing to analyse."}, {"text": "A baseline of normal activity", "isCorrect": true, "rationale": "Second element: without a baseline, nobody can say that an activity is abnormal."}, {"text": "An account lockout policy", "isCorrect": false, "rationale": "It is a preventive control. Detection works with or without it."}, {"text": "Detection rules with thresholds or signatures", "isCorrect": true, "rationale": "Third element: the rules produce the alerts."}, {"text": "A person who reads the alert and acts on it", "isCorrect": true, "rationale": "Example 2: if nobody reads the alert during the fourteen minutes, detection had no effect."}]}];
+
+        // STATE
+        let currentCardIndex = 0;
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let resultsChart = null;
+
+        // NAVIGATION
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm', 'active');
+                b.classList.add('text-slate-600');
+            });
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.add('bg-white', 'text-indigo-600', 'shadow-sm', 'active');
+            activeBtn.classList.remove('text-slate-600');
+        }
+
+        // FLASHCARD LOGIC
+        function updateCard() {
+            const card = flashcards[currentCardIndex];
+            const inner = document.getElementById('flashcard-inner');
+            inner.classList.remove('flipped');
+
+            setTimeout(() => {
+                document.getElementById('card-front-text').innerHTML = card.front;
+                document.getElementById('card-back-text').innerHTML = card.back;
+                document.getElementById('card-counter').innerText = `${currentCardIndex + 1} / ${flashcards.length}`;
+                document.getElementById('card-progress').style.width = `${((currentCardIndex + 1) / flashcards.length) * 100}%`;
+            }, 150);
+        }
+
+        function nextCard() {
+            currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+            updateCard();
+        }
+
+        function prevCard() {
+            currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+            updateCard();
+        }
+
+        // QUIZ LOGIC
+        function startQuiz() {
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = quizQuestions[currentQuizIndex];
+            const isMsq = q.type === 'msq';
+
+            let stemHtml = q.question;
+            if (isMsq) {
+                stemHtml += ` <span class="msq-badge">MSQ (Select ${q.need} answer${q.need > 1 ? 's' : ''})</span>`;
+            }
+            document.getElementById('quiz-question').innerHTML = stemHtml;
+            document.getElementById('quiz-progress-text').innerText = `Question ${currentQuizIndex + 1} of ${quizQuestions.length}`;
+            document.getElementById('quiz-hint').innerHTML = q.hint;
+            document.getElementById('quiz-hint').classList.add('hidden');
+            document.getElementById('hint-toggle-btn').innerText = "Need a hint? 💡";
+
+            const optionsBox = document.getElementById('quiz-options');
+            optionsBox.innerHTML = '';
+            const submitBox = document.getElementById('quiz-submit-box');
+            const msqNote = document.getElementById('msq-count-note');
+
+            if (isMsq) {
+                submitBox.classList.remove('hidden');
+                document.getElementById('msq-submit-btn').disabled = true;
+                msqNote.innerText = `Select exactly ${q.need} answer${q.need > 1 ? 's' : ''}, then submit.`;
+
+                q.options.forEach((opt, idx) => {
+                    const row = document.createElement('label');
+                    row.className = "quiz-opt-row w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-slate-700 font-medium cursor-pointer quiz-opt-row-el";
+                    row.innerHTML = `<input type="checkbox" data-idx="${idx}" onchange="onMsqChange()"><span>${opt.text}</span>`;
+                    optionsBox.appendChild(row);
+                });
+            } else {
+                submitBox.classList.add('hidden');
+                q.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-slate-700 font-medium quiz-opt-btn";
+                    btn.innerHTML = opt.text;
+                    btn.onclick = () => selectOption(idx);
+                    optionsBox.appendChild(btn);
+                });
+            }
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-feedback').innerHTML = '';
+            document.getElementById('next-q-btn').classList.add('hidden');
+        }
+
+        function onMsqChange() {
+            const q = quizQuestions[currentQuizIndex];
+            const checked = document.querySelectorAll('#quiz-options input[type="checkbox"]:checked').length;
+            document.getElementById('msq-submit-btn').disabled = (checked !== q.need);
+        }
+
+        function selectOption(idx) {
+            const q = quizQuestions[currentQuizIndex];
+            const selected = q.options[idx];
+            const feedbackBox = document.getElementById('quiz-feedback');
+
+            document.querySelectorAll('.quiz-opt-btn').forEach((b, i) => {
+                b.disabled = true;
+                if (q.options[i].isCorrect) {
+                    b.classList.add('border-emerald-400', 'bg-emerald-50');
+                }
+            });
+
+            finishQuestionScoring(selected.isCorrect);
+            feedbackBox.innerHTML = renderRationale(q.options);
+            revealFeedback(selected.isCorrect, feedbackBox);
+        }
+
+        function submitMsq() {
+            const q = quizQuestions[currentQuizIndex];
+            const checkboxes = document.querySelectorAll('#quiz-options input[type="checkbox"]');
+            const selectedIdx = new Set();
+            checkboxes.forEach(cb => { if (cb.checked) selectedIdx.add(parseInt(cb.dataset.idx)); cb.disabled = true; });
+
+            let allCorrect = true;
+            q.options.forEach((opt, idx) => {
+                const isSelected = selectedIdx.has(idx);
+                if (isSelected !== opt.isCorrect) allCorrect = false;
+                const row = document.querySelectorAll('.quiz-opt-row-el')[idx];
+                if (opt.isCorrect) row.classList.add('border-emerald-400', 'bg-emerald-50');
+                else if (isSelected) row.classList.add('border-rose-400', 'bg-rose-50');
+            });
+
+            document.getElementById('msq-submit-btn').disabled = true;
+
+            finishQuestionScoring(allCorrect);
+            const feedbackBox = document.getElementById('quiz-feedback');
+            feedbackBox.innerHTML = renderRationale(q.options);
+            revealFeedback(allCorrect, feedbackBox);
+        }
+
+        function renderRationale(options) {
+            return options.map(o => {
+                const tag = o.isCorrect ? '<strong class="text-emerald-700">✔</strong>' : '<strong class="text-rose-700">✘</strong>';
+                return `<div class="mb-2">${tag} <strong>${o.text}</strong> — ${o.rationale}</div>`;
+            }).join('');
+        }
+
+        function finishQuestionScoring(isCorrect) {
+            if (isCorrect) quizScore++;
+            document.getElementById('quiz-score-live').innerText = `Score: ${quizScore}`;
+        }
+
+        function revealFeedback(isCorrect, feedbackBox) {
+            feedbackBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+                feedbackBox.innerHTML = `<div class="mb-3"><strong>Correct!</strong></div>` + feedbackBox.innerHTML;
+            } else {
+                feedbackBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
+                feedbackBox.innerHTML = `<div class="mb-3"><strong>Not quite.</strong></div>` + feedbackBox.innerHTML;
+            }
+            document.getElementById('next-q-btn').classList.remove('hidden');
+        }
+
+        function toggleHint() {
+            const hint = document.getElementById('quiz-hint');
+            const btn = document.getElementById('hint-toggle-btn');
+            if (hint.classList.contains('hidden')) {
+                hint.classList.remove('hidden');
+                btn.innerText = "Hide hint";
+            } else {
+                hint.classList.add('hidden');
+                btn.innerText = "Need a hint? 💡";
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizQuestions.length - 1) {
+                currentQuizIndex++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-active').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            document.getElementById('result-summary').innerText = `You scored ${quizScore} out of ${quizQuestions.length}`;
+
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            if (resultsChart) resultsChart.destroy();
+
+            resultsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        data: [quizScore, quizQuestions.length - quizScore],
+                        backgroundColor: ['#10b981', '#f43f5e'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        function resetQuiz() {
+            quizScore = 0;
+            currentQuizIndex = 0;
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-intro').classList.remove('hidden');
+            document.getElementById('quiz-score-live').innerText = `Score: 0`;
+        }
+
+        // INIT
+        updateCard();
+    </script>
+</body>
+</html>

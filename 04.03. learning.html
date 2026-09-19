@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>420-1C1-DW · Security vs Performance — Study Hub | Cyber.SoHo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy:   { 50:'#eef4fa', 100:'#d7e6f3', 200:'#aecbe4', 300:'#7ea9d1', 400:'#4d82b6', 500:'#26618F', 600:'#0F4C81', 700:'#0B3A64', 800:'#0A2E4E', 900:'#12233A' },
+          sand:   { 50:'#fdf9ef', 100:'#FBEFD3', 200:'#F3DFAE', 300:'#e8c87f' },
+          crimson:{ 50:'#fdf2f4', 100:'#fbe0e4', 500:'#B3122C', 600:'#8f0e23' },
+          sea:    { 50:'#eef7f5', 100:'#d6ece8', 200:'#a9d8d1', 500:'#1E7A6F', 600:'#166057' }
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Flashcard Flip Animation */
+  .flashcard-container { perspective: 1000px; }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+  .flashcard-inner.flipped { transform: rotateY(180deg); }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    overflow-y: auto;
+  }
+  .card-back { transform: rotateY(180deg); background-color: #eef4fa; border: 2px solid #0F4C81; }
+  .card-front { background-color: white; border: 2px solid #e2e8f0; }
+
+  .chart-container { position: relative; width: 100%; max-width: 400px; margin: 0 auto; height: 300px; }
+
+  /* MSQ selection styling */
+  .msq-selected { border-color: #0F4C81 !important; background-color: #eef4fa !important; }
+  .opt-correct  { border-color: #10b981 !important; background-color: #ecfdf5 !important; }
+  .opt-missed   { border-color: #f59e0b !important; background-color: #fffbeb !important; }
+  .opt-wrong    { border-color: #f43f5e !important; background-color: #fff1f2 !important; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl">🛡️</span>
+      <div>
+        <h1 class="text-xl font-bold tracking-tight text-slate-800">420-1C1-DW Study Hub</h1>
+        <p class="text-[11px] uppercase tracking-widest text-slate-400 font-bold">Preventative Monitoring · Topic 1 (end)</p>
+      </div>
+    </div>
+    <nav class="flex bg-slate-100 p-1 rounded-xl shadow-inner">
+      <button onclick="switchTab('dashboard')" class="nav-btn active px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-white text-navy-600 shadow-sm" id="btn-dashboard">Dashboard</button>
+      <button onclick="switchTab('flashcards')" class="nav-btn px-6 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900" id="btn-flashcards">Flashcards</button>
+      <button onclick="switchTab('quiz')" class="nav-btn px-6 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900" id="btn-quiz">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
+
+  <!-- ==================== DASHBOARD ==================== -->
+  <section id="dashboard" class="tab-content active space-y-8">
+    <div class="bg-navy-600 rounded-3xl p-8 text-white shadow-xl shadow-navy-100">
+      <p class="text-[11px] uppercase tracking-widest text-sand-200 font-bold mb-2">Class 4 · Topic 1 (end) · Competency EZ01 · Element 1</p>
+      <h2 class="text-3xl font-bold mb-4">Security issues versus performance issues.</h2>
+      <p class="text-navy-100 max-w-2xl leading-relaxed">
+        A network that is slow and a network that is under attack can look identical on the first screen you open.
+        This Study Hub drills the method for telling the two apart with evidence, and then closes Topic 1 by pulling
+        subjects 1.1 to 1.5 into one picture you can use in the labs, in the midterm, and on the job.
+      </p>
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-4 border border-white/20">
+          <span class="text-3xl">🗂️</span>
+          <div>
+            <div class="text-xs uppercase font-bold text-navy-100 tracking-widest">Memorization</div>
+            <div class="text-lg font-bold">25 Flashcards</div>
+          </div>
+        </div>
+        <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-4 border border-white/20">
+          <span class="text-3xl">📝</span>
+          <div>
+            <div class="text-xs uppercase font-bold text-navy-100 tracking-widest">Assessment</div>
+            <div class="text-lg font-bold">12 Practice Questions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 md:col-span-2">
+        <h3 class="font-bold text-lg mb-2">Instructions</h3>
+        <ul class="space-y-3 text-sm text-slate-600">
+          <li class="flex items-start gap-2"><span>✅</span> Use <b>Flashcards</b> to master the vocabulary of subject 1.5.1 and the recap of Topic 1.</li>
+          <li class="flex items-start gap-2"><span>✅</span> Take the <b>Quiz</b> to practise the four-question triage and the four verdicts.</li>
+          <li class="flex items-start gap-2"><span>✅</span> Every multiple-selection question states, in round brackets, exactly how many answers are expected.</li>
+          <li class="flex items-start gap-2"><span>✅</span> Each option carries its own explanation, so a wrong choice tells you which section to read again.</li>
+        </ul>
+      </div>
+      <div class="bg-navy-900 p-6 rounded-2xl text-white">
+        <h3 class="font-bold text-lg mb-2 text-sand-200">Quick Pro-Tip</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          A performance issue is explained by <b>demand, faults and change</b>. A security issue is explained by an
+          <b>actor</b>. When nothing ordinary explains a symptom and traces of an actor are present, the classification
+          is security — even when the service is still working perfectly.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <h3 class="font-bold text-lg mb-3">The four-question triage</h3>
+        <ol class="space-y-2 text-sm text-slate-600 list-decimal list-inside">
+          <li>What exactly is affected, and since when?</li>
+          <li>Does demand or a change explain it?</li>
+          <li><b>Is there evidence of an actor?</b> (the decisive question)</li>
+          <li>What does the baseline say?</li>
+        </ol>
+        <div class="mt-4 flex flex-wrap gap-2 text-xs font-bold">
+          <span class="px-3 py-1 rounded-full border border-sea-500 text-sea-600">Performance</span>
+          <span class="px-3 py-1 rounded-full border border-crimson-500 text-crimson-500">Security</span>
+          <span class="px-3 py-1 rounded-full border border-amber-600 text-amber-700">Both</span>
+          <span class="px-3 py-1 rounded-full border border-slate-400 text-slate-500">Undetermined</span>
+        </div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <h3 class="font-bold text-lg mb-3">Course facts</h3>
+        <dl class="text-sm text-slate-600 space-y-2">
+          <div class="flex justify-between gap-4"><dt class="font-semibold text-slate-500">Course</dt><dd class="text-right">420-1C1-DW · Preventative Monitoring</dd></div>
+          <div class="flex justify-between gap-4"><dt class="font-semibold text-slate-500">Programme</dt><dd class="text-right">Cybersecurity: Prevention and Intervention (LEA.D8)</dd></div>
+          <div class="flex justify-between gap-4"><dt class="font-semibold text-slate-500">Competency</dt><dd class="text-right">EZ01 · Element 1, criteria 1.1 to 1.4</dd></div>
+          <div class="flex justify-between gap-4"><dt class="font-semibold text-slate-500">Today closes</dt><dd class="text-right">Topic 1 · Quiz 1 follows (5%)</dd></div>
+          <div class="flex justify-between gap-4"><dt class="font-semibold text-slate-500">Next deliverable</dt><dd class="text-right">Lab 1 — 25 September</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="border-l-4 border-crimson-500 bg-crimson-50 rounded-lg p-5 text-sm text-slate-700">
+      <p class="mb-2"><b class="text-crimson-500">Before you use anything in this module.</b> These are educational materials of Cyber.SoHo. They are written for use inside an authorized laboratory environment, on systems you own or are expressly authorized in writing to work on. Applying monitoring, capture or analysis tools to any other system, network or data may be a criminal offence in Canada, including under sections 342.1, 342.2, 430(1.1) and 184 of the <em>Criminal Code</em>.</p>
+      <p>Never capture on a shared network, never install a monitoring agent on a device belonging to another person, and treat every capture, log file and baseline as personal information. The full rule is section 7.2 of the
+        <a class="text-navy-600 underline font-semibold" href="https://cyber-soho.github.io/prevmon/00.01.%20cyber.soho%20-%20legal.html" target="_blank" rel="noopener">Cyber.SoHo Legal Notice, Terms of Use and Acceptable Use Policy</a>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== FLASHCARDS ==================== -->
+  <section id="flashcards" class="tab-content space-y-8">
+    <div class="text-center">
+      <h2 class="text-2xl font-bold text-slate-800">Knowledge Cards</h2>
+      <p class="text-slate-500 text-sm mt-1">Click the card to flip it, use the arrows to navigate.</p>
+    </div>
+
+    <div class="max-w-md mx-auto flashcard-container">
+      <div class="flashcard-inner" id="flashcard-inner" onclick="this.classList.toggle('flipped')">
+        <div class="card-front">
+          <p id="card-front-text" class="text-xl font-bold text-slate-800"></p>
+        </div>
+        <div class="card-back">
+          <p id="card-back-text" class="text-base text-navy-900 leading-relaxed"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center gap-6">
+      <button onclick="prevCard()" class="p-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">⬅️</button>
+      <div class="text-slate-400 font-mono text-sm" id="card-counter">1 / 25</div>
+      <button onclick="nextCard()" class="p-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">➡️</button>
+    </div>
+
+    <div class="max-w-md mx-auto h-2 bg-slate-200 rounded-full overflow-hidden">
+      <div id="card-progress" class="h-full bg-navy-600 transition-all duration-300" style="width: 4%"></div>
+    </div>
+  </section>
+
+  <!-- ==================== QUIZ ==================== -->
+  <section id="quiz" class="tab-content space-y-8">
+    <div id="quiz-intro" class="text-center py-12">
+      <div class="text-5xl mb-4">🏆</div>
+      <h2 class="text-3xl font-bold text-slate-800">Ready for the Assessment?</h2>
+      <p class="text-slate-500 mt-2 mb-8">Test your ability to classify a symptom as a performance issue, a security issue, both, or undetermined.</p>
+      <button onclick="startQuiz()" class="bg-navy-600 text-white px-10 py-4 rounded-2xl font-bold shadow-lg hover:bg-navy-700 transition-transform hover:-translate-y-1">Start Quiz</button>
+    </div>
+
+    <div id="quiz-active" class="hidden max-w-2xl mx-auto space-y-6">
+      <div class="flex justify-between items-center text-sm font-bold text-slate-400">
+        <span id="quiz-progress-text">Question 1 of 12</span>
+        <span id="quiz-score-live">Score: 0</span>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+        <div id="quiz-question" class="text-lg font-bold text-slate-800 mb-2"></div>
+        <div id="quiz-type-badge" class="mb-6"></div>
+        <div id="quiz-options" class="space-y-3"></div>
+
+        <div id="msq-controls" class="hidden mt-5 flex items-center justify-between gap-4">
+          <span id="msq-counter" class="text-xs font-bold text-slate-400"></span>
+          <button id="submit-msq-btn" onclick="submitMsq()" class="bg-navy-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-navy-700 disabled:opacity-40 disabled:cursor-not-allowed" disabled>Submit Answer</button>
+        </div>
+
+        <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl text-sm border"></div>
+
+        <div id="quiz-hint-box" class="mt-6 text-center">
+          <button onclick="toggleHint()" id="hint-toggle-btn" class="text-xs text-navy-600 font-bold hover:underline">Need a hint? 💡</button>
+          <p id="quiz-hint" class="hidden mt-2 text-xs text-slate-500 italic"></p>
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <button id="next-q-btn" onclick="nextQuestion()" class="hidden ml-auto bg-navy-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-navy-800">Next Question</button>
+      </div>
+    </div>
+
+    <div id="quiz-results" class="hidden text-center space-y-8 animate-fadeIn">
+      <h2 class="text-3xl font-bold text-slate-800">Assessment Complete!</h2>
+      <div class="chart-container">
+        <canvas id="resultsChart"></canvas>
+      </div>
+      <div id="result-summary" class="text-xl font-bold"></div>
+      <div id="result-breakdown" class="max-w-md mx-auto text-left text-sm text-slate-600 bg-white border border-slate-200 rounded-2xl p-5"></div>
+      <button onclick="resetQuiz()" class="bg-slate-200 text-slate-800 px-8 py-3 rounded-xl font-bold hover:bg-slate-300">Try Again</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-6 mt-8">
+        <div class="container mx-auto text-center text-sm">
+            <p style="display:flex; justify-content:center; align-items:center; gap:8px; margin:0;">
+				<img src="cyber_soho.png"
+					 alt="Cyber Soho"
+					 style="height:50px;">
+				<span>Educational Hub &copy; 2026 | From the Industry to the Classroom — Building the IT’s Future, Today and Together !
+				<br>ALL Rights Reserverd</br>
+			</p>
+        </div>
+    </footer>
+
+<script>
+/* =====================================================================
+   DATA — Flashcards (25)
+   ===================================================================== */
+const flashcards = [
+  { front: "Event", back: "Any observable occurrence in a system or on a network: a user signing in, a file being written, a service restarting, a packet crossing an interface. An event is neutral. It is not good or bad by itself." },
+  { front: "Alert", back: "A notification produced by a monitoring tool when an event, or a measurement, matches a rule or crosses a threshold that a human being configured in advance. An alert is a claim made by a tool, not a fact." },
+  { front: "Incident", back: "An event, or a group of connected events, that harms or threatens to harm the confidentiality, integrity or availability of information or of a service, or that breaks a policy. An incident is a conclusion reached by a person after looking at evidence." },
+  { front: "Baseline (reference database of normal activity)", back: "A written and measured description of how a system or a network behaves when nothing is wrong, recorded over a period long enough to include the normal cycles of the organization. Without a baseline, the words \"high\", \"slow\" and \"unusual\" have no meaning." },
+  { front: "False positive", back: "An alert raised when nothing abnormal happened. Both false positives and false negatives are failures of the monitoring configuration, and both are reduced by a good baseline." },
+  { front: "False negative", back: "The absence of an alert when something abnormal did happen." },
+
+  { front: "Performance issue", back: "A condition in which a system or a service still behaves exactly as it was designed to behave, but delivers its function too slowly, with less capacity than required, or with interruptions, because of demand, resource limits, faults, or configuration. No unauthorized person is involved." },
+  { front: "Security issue", back: "A condition caused by, or indicating, an action that was not authorized, an attempt at such an action, or a weakness that makes such an action possible. It affects at least one of confidentiality, integrity or availability. The distinguishing element is the presence of an actor." },
+  { front: "The point that decides most cases", back: "A performance issue is explained by demand, faults and change. A security issue is explained by an actor. When you cannot explain a symptom by demand, by a fault or by a documented change, and when traces of an actor are present, the classification is security — even when the service is still working perfectly." },
+  { front: "Triage", back: "Sorting reports and alerts in order to decide which ones require action and in what order." },
+  { front: "The four-question triage", back: "1. What exactly is affected, and since when? 2. Does demand or a change explain it? 3. Is there evidence of an actor? 4. What does the baseline say? Question 3 is the one that decides most cases." },
+  { front: "The decision rule (four verdicts)", back: "Actor traces present and no authorization → Security. No actor, demand/fault/change explains it, values inside the baseline → Performance. Actor present AND a resource exhausted → Both (handle security first). Question 3 unanswered → Undetermined." },
+  { front: "Why is the decision rule asymmetric?", back: "Because of the cost of the two possible mistakes. Calling a security incident a performance problem leaves an actor inside the network with time to continue. Calling a performance problem a security incident costs an escalation and some wasted hours. The second mistake is corrected in a morning; the first one is corrected by a lawyer." },
+  { front: "Why is rebooting a slow server a risk before the classification is made?", back: "A restart destroys memory contents, the list of running processes and temporary files. If the verdict turns out to be security, the evidence needed to build the timeline is gone. Export the logs and record the times first." },
+
+  { front: "Cybersecurity", back: "The set of practices, technical measures and organizational rules that protect information, the systems that process it, and the services built on them, against unauthorized access, unauthorized modification, disruption and destruction." },
+  { front: "The CIA triad", back: "Confidentiality, Integrity, Availability — the three properties that define what \"protected\" means." },
+  { front: "Confidentiality", back: "Information is available only to the persons and systems authorized to see it. A failure looks like data read, copied or sent to someone with no right to it." },
+  { front: "Integrity", back: "Information and systems are modified only in authorized ways, and any modification can be detected. A failure looks like records altered, configurations changed, software replaced, logs deleted." },
+  { front: "Availability", back: "Information and services are usable by authorized persons when they need them. A failure looks like a service down, unreachable, saturated, or data unusable." },
+  { front: "Prevention", back: "Measures that stop an unwanted action from succeeding: authentication including MFA (Multi-Factor Authentication), permissions, firewall rules, network segmentation, updates, hardening, and training." },
+  { front: "Detection", back: "Measures that make an action visible while or shortly after it happens: logging, monitoring tools, IDS (Intrusion Detection System), SIEM (Security Information and Event Management), file integrity checking, alerting on a baseline deviation. This is where this course lives." },
+  { front: "Response", back: "Measures that limit the damage and restore service: isolating a host, disabling an account, blocking an address, restoring from backup, and the incident procedure that says who decides and who is told." },
+  { front: "The sentence to remember: prevention vs detection", back: "Detection exists because prevention fails. No set of preventive measures is complete, which is why an organization that monitors nothing will learn about its incidents from a client, a bank, or a journalist." },
+  { front: "Defence in depth", back: "The practice of placing several independent controls on the same path, so that one failure does not become an incident. Controls are also grouped by nature: technical, administrative or managerial, operational, and physical." },
+  { front: "Québec obligation after a confidentiality incident", back: "Under the Act respecting the protection of personal information in the private sector, as amended by Law 25, an enterprise must keep a register of confidentiality incidents and must notify the CAI (Commission d'accès à l'information du Québec) and the persons concerned when an incident presents a risk of serious injury." }
+];
+
+/* =====================================================================
+   DATA — Quiz (12 questions)
+   MCQs: single answer. MSQs: several answers, count stated in round
+   brackets in the question text, as required.
+   ===================================================================== */
+const quizQuestions = [
+  /* ---------- Subject 1.5 ---------- */
+  {
+    type: "mcq",
+    topic: "1.5 Security vs performance",
+    question: "A workstation runs at 100% processor use every night from 01:00 to 01:40. It stops at the exact minute the antivirus full scan finishes. No new account, no new service, no new outbound destination and no failed sign-in appear in the same window. What is the correct classification?",
+    hint: "Ask yourself which of the four questions is already fully answered by the words \"the scan finishes\".",
+    options: [
+      { text: "A. Security incident", isCorrect: false, rationale: "No. Severity and duration do not classify anything. Question 3 found no trace of an actor, so nothing supports a security verdict." },
+      { text: "B. Performance issue", isCorrect: true, rationale: "Correct. Question 2 is answered by a scheduled job, question 3 finds no actor, and the behaviour repeats on a schedule. The correction is a scheduling or resource decision." },
+      { text: "C. Undetermined", isCorrect: false, rationale: "No. Undetermined is used when question 3 cannot be answered. Here it is answered, and the answer is that no actor is present." },
+      { text: "D. Both", isCorrect: false, rationale: "No. \"Both\" requires actor evidence together with resource exhaustion. Only the resource part is present." }
+    ]
+  },
+  {
+    type: "mcq",
+    topic: "1.5 Security vs performance",
+    question: "Four measurements arrive at the same moment. Which one points most strongly towards a security issue rather than a performance issue?",
+    hint: "Three of these are resource measurements. One of them describes something that a machine fault cannot produce.",
+    options: [
+      { text: "A. Processor use at 95% on the file server", isCorrect: false, rationale: "No. A high processor value is a resource measurement. It appears in both categories and decides nothing on its own." },
+      { text: "B. A process writing 200 megabytes per second to disk", isCorrect: false, rationale: "No, not by itself. A backup, a video export or an archive job produces the same value. You would still have to identify the process and the account." },
+      { text: "C. 412 failed sign-ins from one address at 03:00, followed by one success", isCorrect: true, rationale: "Correct. This is actor evidence: a repeated attempt, at an hour with no staff, ending in access. It answers question 3 directly." },
+      { text: "D. The office printer is offline", isCorrect: false, rationale: "No. A device that is offline is an availability symptom with many ordinary causes, and nothing in it identifies an actor." }
+    ]
+  },
+  {
+    type: "mcq",
+    topic: "1.5 Security vs performance",
+    question: "In the triage method, what exactly does the baseline give you?",
+    hint: "Without it, the words \"high\", \"slow\" and \"unusual\" cannot be defended in a report.",
+    options: [
+      { text: "A. A list of the vulnerabilities present on the asset", isCorrect: false, rationale: "No. That is the product of a vulnerability assessment, which belongs to a later course of the programme, not to a baseline." },
+      { text: "B. A measured record of normal behaviour to compare the current values against", isCorrect: true, rationale: "Correct. The baseline is the reference database of normal activity. It converts an impression into a comparison with a number." },
+      { text: "C. The set of firewall rules in force", isCorrect: false, rationale: "No. Firewall rules are a preventive control. They describe what is allowed, not what normally happens." },
+      { text: "D. The format required for an incident report", isCorrect: false, rationale: "No. The report format comes from the incident procedure of the organization." }
+    ]
+  },
+  {
+    type: "mcq",
+    topic: "1.5 Security vs performance",
+    question: "Ransomware encrypts the shared folders of a file server. During the encryption the server becomes very slow and users complain about response time. Which statement is correct?",
+    hint: "Separate the symptom that users feel from the cause that produced it.",
+    options: [
+      { text: "A. It is a performance issue, because the reported symptom is slowness", isCorrect: false, rationale: "No. The classification follows the cause, not the symptom. An unauthorized process is modifying data." },
+      { text: "B. It is a security incident that also produces a performance symptom", isCorrect: true, rationale: "Correct. Integrity and availability are both affected by an unauthorized actor. The slowness is a consequence and is kept as evidence of impact." },
+      { text: "C. It stays undetermined until the server has been restarted", isCorrect: false, rationale: "No. A restart is precisely what must not happen: it destroys volatile evidence and does not change the classification." },
+      { text: "D. It is a performance issue until the backup also fails", isCorrect: false, rationale: "No. Nothing in the failure of a backup changes who caused the event. The actor was present from the first encrypted file." }
+    ]
+  },
+  {
+    type: "msq",
+    topic: "1.5 Security vs performance",
+    question: "Which of the following count as evidence of an actor, the kind that answers question 3 of the triage? (Select exactly 4 answers.)",
+    hint: "Two of the six options describe planned, recorded activity. Those two belong to question 2, not question 3.",
+    options: [
+      { text: "A. A new local administrator account created at 02:47 with no change record", isCorrect: true, rationale: "Counts. Account creation is an action, it happened outside working hours, and no authorization explains it." },
+      { text: "B. The nightly backup job running in its normal window", isCorrect: false, rationale: "Does not count. This is a planned activity that answers question 2 and pushes the case towards the performance side." },
+      { text: "C. An outbound connection to an address that appears nowhere in the baseline", isCorrect: true, rationale: "Counts. A destination never seen before, carrying volume, is one of the strongest indicators available to a monitoring technician." },
+      { text: "D. A scheduled task installed on a server that no administrator recognizes", isCorrect: true, rationale: "Counts. Persistence is the mark of an actor who intends to return. A machine fault never creates a scheduled task." },
+      { text: "E. The monthly operating system update installed by the update service", isCorrect: false, rationale: "Does not count. It is a documented change, recorded in the update history, and it answers question 2." },
+      { text: "F. The security log of the server cleared during the same hour", isCorrect: true, rationale: "Counts. Clearing a log is an action taken to remove evidence. Hardware faults do not tidy up after themselves." }
+    ]
+  },
+  {
+    type: "msq",
+    topic: "1.5 Security vs performance",
+    question: "Which statements about the relationship between performance and security are correct? (Select exactly 4 answers.)",
+    hint: "Four statements describe how the two categories overlap in practice. Two are absolute claims, and absolute claims are rarely correct in monitoring.",
+    options: [
+      { text: "A. A security incident can produce a performance symptom", isCorrect: true, rationale: "Correct. Encryption, mining software and denial-of-service traffic all consume processor, disk or bandwidth." },
+      { text: "B. A performance problem can hide a security incident", isCorrect: true, rationale: "Correct. When a link is saturated or a collector drops records, the traces of an actor are mixed into the noise or never recorded at all." },
+      { text: "C. Every slow service should be treated as a security incident", isCorrect: false, rationale: "Incorrect. That produces constant false positives, exhausts the team and trains everyone to ignore alerts. Evidence decides, not suspicion." },
+      { text: "D. A security issue can exist with no performance symptom at all", isCorrect: true, rationale: "Correct. Copying a client folder or creating a hidden account costs the network nothing measurable, which is why monitoring must also watch accounts, files and destinations." },
+      { text: "E. Performance data has no value for security monitoring", isCorrect: false, rationale: "Incorrect. Processor, disk and bandwidth measurements are often the first visible sign of ransomware, mining software or exfiltration." },
+      { text: "F. The classification decides what is preserved and who is informed", isCorrect: true, rationale: "Correct. That is its purpose: it selects a procedure, an audience and, where personal information is involved, a legal obligation." }
+    ]
+  },
+
+  /* ---------- Recap of Topic 1 ---------- */
+  {
+    type: "mcq",
+    topic: "Recap of Topic 1",
+    question: "A supplier invoice stored on the file server is modified after it was approved, and its cryptographic hash no longer matches the recorded value. Which property of the triad is affected first?",
+    hint: "A hash value answers exactly one question: has this content changed?",
+    options: [
+      { text: "A. Confidentiality", isCorrect: false, rationale: "Not first. Nothing so far shows that an unauthorized person read the invoice; what is proven is that its content changed." },
+      { text: "B. Integrity", isCorrect: true, rationale: "Correct. A hash that no longer matches proves an unauthorized modification, which is the definition of a loss of integrity." },
+      { text: "C. Availability", isCorrect: false, rationale: "No. The file is still there and still usable. Availability concerns access to the service or the data, not its correctness." },
+      { text: "D. None, because the file still opens", isCorrect: false, rationale: "No. A file that opens can still contain false information, and in an invoice that is precisely the damage." }
+    ]
+  },
+  {
+    type: "mcq",
+    topic: "Recap of Topic 1",
+    question: "Which of these is a detective control?",
+    hint: "Ask whether the measure stops the action or reveals it.",
+    options: [
+      { text: "A. A policy that requires passwords of twelve characters", isCorrect: false, rationale: "No. That is an administrative preventive control: it reduces the chance of a successful guess before anything happens." },
+      { text: "B. A lock on the server cabinet", isCorrect: false, rationale: "No. That is a physical preventive control." },
+      { text: "C. Daily review of authentication logs with alerting on failure bursts", isCorrect: true, rationale: "Correct. It does not stop the attempt; it makes the attempt visible. That is detection, and it is the subject of this course." },
+      { text: "D. A firewall rule that blocks a port from the internet", isCorrect: false, rationale: "No. Blocking is prevention. The same firewall becomes a detective control only when its logs are collected and reviewed." }
+    ]
+  },
+  {
+    type: "mcq",
+    topic: "Recap of Topic 1",
+    question: "Which statement about prevention and detection is correct?",
+    hint: "One sentence from section 1.4 of the recap was written specifically for this question.",
+    options: [
+      { text: "A. Detection replaces prevention once monitoring is installed", isCorrect: false, rationale: "No. Detection reports; it does not stop anything. Removing preventive controls would simply give you a clear view of a disaster." },
+      { text: "B. Prevention alone is sufficient for a small organization", isCorrect: false, rationale: "No. Size changes the scale of the loss, not the fact that preventive measures fail. Small organizations are attacked precisely because they detect nothing." },
+      { text: "C. Detection exists because prevention fails", isCorrect: true, rationale: "Correct. No set of preventive measures is complete, so an organization needs to see what got through, and how far it went." },
+      { text: "D. Detection applies to servers only", isCorrect: false, rationale: "No. Workstations, network equipment, wireless access points and cloud services all produce events that must be collected." }
+    ]
+  },
+  {
+    type: "mcq",
+    topic: "Recap of Topic 1",
+    question: "In the vocabulary of this course, what exactly is an alert?",
+    hint: "Put the three words in the order in which they occur: event, alert, incident.",
+    options: [
+      { text: "A. Any observable occurrence on a system or network", isCorrect: false, rationale: "No, that is an event. Events are neutral and there are millions of them every day." },
+      { text: "B. A notification produced by a tool when a rule or a threshold is matched", isCorrect: true, rationale: "Correct. An alert is a claim made by a tool because a human being configured a rule in advance. It still has to be verified." },
+      { text: "C. A confirmed incident", isCorrect: false, rationale: "No. Confirmation is the work of a person who examines evidence. Treating every alert as an incident is how teams drown in false positives." },
+      { text: "D. The recorded normal behaviour of a system", isCorrect: false, rationale: "No, that is the baseline, the reference database of normal activity." }
+    ]
+  },
+  {
+    type: "msq",
+    topic: "Recap of Topic 1",
+    question: "Which of these monitoring signals point primarily at a loss of confidentiality? (Select exactly 4 answers.)",
+    hint: "Two options describe capacity and service problems. Confidentiality is about who may see, not about whether the service runs.",
+    options: [
+      { text: "A. A large outbound transfer to a destination absent from the baseline", isCorrect: true, rationale: "Yes. Data leaving to an unknown place is the classic signal of information being disclosed to someone with no right to it." },
+      { text: "B. A client folder opened by an account that has never used it", isCorrect: true, rationale: "Yes. Access by someone outside the normal set of users is a confidentiality signal, whether the person is an intruder or an employee exceeding their role." },
+      { text: "C. A service restarting in a loop", isCorrect: false, rationale: "No. That is an availability signal, usually caused by a fault, a resource limit or a deliberate crash." },
+      { text: "D. A copy of the client folder written to a removable storage device", isCorrect: true, rationale: "Yes. Copying to removable storage removes information from the controls of the organization." },
+      { text: "E. The backup disk is almost full", isCorrect: false, rationale: "No. That is an availability and capacity signal. It is serious, but it does not concern who may see the information." },
+      { text: "F. A successful sign-in from a country where the organization has no staff", isCorrect: true, rationale: "Yes. It indicates that credentials are being used by someone who should not have them." }
+    ]
+  },
+  {
+    type: "msq",
+    topic: "Recap of Topic 1",
+    question: "Element 1 of competency EZ01 is \"distinguish between the concepts linked to cybersecurity\". Which of the following are required by its four performance criteria? (Select exactly 4 answers.)",
+    hint: "Element 1 is about concepts. Anything that requires you to touch a tool or a network belongs to a later element.",
+    options: [
+      { text: "A. Correctly identify issues of confidentiality, integrity and availability", isCorrect: true, rationale: "Yes, criterion 1.1, covered in subject 1.2." },
+      { text: "B. Differentiate precisely between types of cyberattacks", isCorrect: true, rationale: "Yes, criterion 1.2, covered in subject 1.3." },
+      { text: "C. Illustrate cyber defence concepts appropriately", isCorrect: true, rationale: "Yes, criterion 1.3, covered in subject 1.4." },
+      { text: "D. Distinguish clearly between performance issues and security issues", isCorrect: true, rationale: "Yes, criterion 1.4, covered in subject 1.5." },
+      { text: "E. Configure the alerts of a monitoring tool", isCorrect: false, rationale: "No. That is element 3 of the competency, criterion 3.5, and it is the work of Lab 2 on 3 October." },
+      { text: "F. Prioritize surveillance activities according to resources and security requirements", isCorrect: false, rationale: "No. That is element 2, criterion 2.3, which belongs to Topic 2 and to Lab 1." }
+    ]
+  }
+];
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+let currentCardIndex = 0;
+let currentQuizIndex = 0;
+let quizScore = 0;
+let resultsChart = null;
+let msqSelection = [];
+let answered = false;
+let topicStats = {};
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('bg-white', 'text-navy-600', 'shadow-sm', 'active');
+    b.classList.add('text-slate-600');
+  });
+
+  const activeBtn = document.getElementById('btn-' + tabId);
+  activeBtn.classList.add('bg-white', 'text-navy-600', 'shadow-sm', 'active');
+  activeBtn.classList.remove('text-slate-600');
+}
+
+/* =====================================================================
+   FLASHCARD LOGIC
+   ===================================================================== */
+function updateCard() {
+  const card = flashcards[currentCardIndex];
+  const inner = document.getElementById('flashcard-inner');
+  inner.classList.remove('flipped');
+
+  setTimeout(() => {
+    document.getElementById('card-front-text').innerText = card.front;
+    document.getElementById('card-back-text').innerText = card.back;
+    document.getElementById('card-counter').innerText = (currentCardIndex + 1) + ' / ' + flashcards.length;
+    document.getElementById('card-progress').style.width = (((currentCardIndex + 1) / flashcards.length) * 100) + '%';
+  }, 150);
+}
+
+function nextCard() {
+  currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+  updateCard();
+}
+
+function prevCard() {
+  currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+  updateCard();
+}
+
+/* =====================================================================
+   QUIZ LOGIC
+   ===================================================================== */
+function startQuiz() {
+  document.getElementById('quiz-intro').classList.add('hidden');
+  document.getElementById('quiz-active').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizQuestions[currentQuizIndex];
+  answered = false;
+  msqSelection = [];
+
+  document.getElementById('quiz-question').innerText = q.question;
+  document.getElementById('quiz-progress-text').innerText = 'Question ' + (currentQuizIndex + 1) + ' of ' + quizQuestions.length;
+  document.getElementById('quiz-hint').innerText = q.hint;
+  document.getElementById('quiz-hint').classList.add('hidden');
+  document.getElementById('hint-toggle-btn').innerText = 'Need a hint? 💡';
+
+  // type badge
+  const badge = document.getElementById('quiz-type-badge');
+  if (q.type === 'msq') {
+    const expected = q.options.filter(o => o.isCorrect).length;
+    badge.innerHTML = '<span class="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-sand-100 text-navy-700 border border-sand-200">Multiple selection &middot; ' + expected + ' answers expected</span>' +
+                      '<span class="ml-2 inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-slate-100 text-slate-500">' + q.topic + '</span>';
+  } else {
+    badge.innerHTML = '<span class="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-sea-50 text-sea-600 border border-sea-100">Multiple choice &middot; one answer</span>' +
+                      '<span class="ml-2 inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-slate-100 text-slate-500">' + q.topic + '</span>';
+  }
+
+  const optionsBox = document.getElementById('quiz-options');
+  optionsBox.innerHTML = '';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-navy-300 hover:bg-navy-50 transition-all text-slate-700 font-medium quiz-opt-btn';
+    btn.innerText = opt.text;
+    btn.dataset.idx = idx;
+    btn.onclick = () => { if (q.type === 'msq') { toggleMsq(idx, btn); } else { selectOption(idx); } };
+    optionsBox.appendChild(btn);
+  });
+
+  // MSQ controls
+  const msqControls = document.getElementById('msq-controls');
+  if (q.type === 'msq') {
+    msqControls.classList.remove('hidden');
+    msqControls.classList.add('flex');
+    updateMsqCounter();
+  } else {
+    msqControls.classList.add('hidden');
+    msqControls.classList.remove('flex');
+  }
+
+  document.getElementById('quiz-feedback').classList.add('hidden');
+  document.getElementById('quiz-feedback').className = 'hidden mt-6 p-4 rounded-xl text-sm border';
+  document.getElementById('next-q-btn').classList.add('hidden');
+}
+
+/* ---------- MCQ ---------- */
+function selectOption(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q = quizQuestions[currentQuizIndex];
+  const selected = q.options[idx];
+  const feedbackBox = document.getElementById('quiz-feedback');
+
+  document.querySelectorAll('.quiz-opt-btn').forEach(b => { b.disabled = true; });
+
+  feedbackBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+
+  if (selected.isCorrect) {
+    quizScore++;
+    recordTopic(q.topic, true);
+    feedbackBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+    feedbackBox.innerHTML = '<strong>Correct!</strong> ' + selected.rationale;
+  } else {
+    recordTopic(q.topic, false);
+    feedbackBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
+    const correctText = q.options.filter(o => o.isCorrect).map(o => o.text).join(' | ');
+    feedbackBox.innerHTML = '<strong>Incorrect.</strong> ' + selected.rationale + '<br><br><strong>The correct answer is:</strong> ' + correctText;
+  }
+
+  document.getElementById('quiz-score-live').innerText = 'Score: ' + quizScore;
+  document.getElementById('next-q-btn').classList.remove('hidden');
+}
+
+/* ---------- MSQ ---------- */
+function toggleMsq(idx, btn) {
+  if (answered) return;
+  const pos = msqSelection.indexOf(idx);
+  if (pos > -1) {
+    msqSelection.splice(pos, 1);
+    btn.classList.remove('msq-selected');
+  } else {
+    msqSelection.push(idx);
+    btn.classList.add('msq-selected');
+  }
+  updateMsqCounter();
+}
+
+function updateMsqCounter() {
+  const q = quizQuestions[currentQuizIndex];
+  const expected = q.options.filter(o => o.isCorrect).length;
+  const chosen = msqSelection.length;
+  const submitBtn = document.getElementById('submit-msq-btn');
+  const counter = document.getElementById('msq-counter');
+
+  counter.innerText = chosen + ' of ' + expected + ' selected';
+  counter.className = 'text-xs font-bold ' + (chosen === expected ? 'text-sea-600' : 'text-slate-400');
+  submitBtn.disabled = (chosen !== expected);
+}
+
+function submitMsq() {
+  if (answered) return;
+  const q = quizQuestions[currentQuizIndex];
+  const expectedIdx = q.options.map((o, i) => o.isCorrect ? i : -1).filter(i => i > -1);
+  const exact = expectedIdx.length === msqSelection.length && expectedIdx.every(i => msqSelection.indexOf(i) > -1);
+
+  answered = true;
+  const feedbackBox = document.getElementById('quiz-feedback');
+  feedbackBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+
+  // Mark every option
+  document.querySelectorAll('.quiz-opt-btn').forEach(b => {
+    const i = parseInt(b.dataset.idx, 10);
+    b.disabled = true;
+    b.classList.remove('msq-selected');
+    const isCorrect = q.options[i].isCorrect;
+    const wasChosen = msqSelection.indexOf(i) > -1;
+    if (isCorrect && wasChosen) b.classList.add('opt-correct');
+    else if (isCorrect && !wasChosen) b.classList.add('opt-missed');
+    else if (!isCorrect && wasChosen) b.classList.add('opt-wrong');
+  });
+
+  if (exact) {
+    quizScore++;
+    recordTopic(q.topic, true);
+    feedbackBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+    feedbackBox.innerHTML = '<strong>Correct — you selected exactly the right set.</strong><br><br>' +
+      expectedIdx.map(i => '<b>' + q.options[i].text.split('.')[0] + '.</b> ' + q.options[i].rationale).join('<br>');
+  } else {
+    recordTopic(q.topic, false);
+    feedbackBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
+    feedbackBox.innerHTML = '<strong>Not correct.</strong> You selected ' + msqSelection.length + ' option(s); the correct set is ' + expectedIdx.length + '.<br><br>' +
+      expectedIdx.map(i => '<b>' + q.options[i].text.split('.')[0] + '.</b> ' + q.options[i].rationale).join('<br>');
+  }
+
+  document.getElementById('quiz-score-live').innerText = 'Score: ' + quizScore;
+  document.getElementById('msq-controls').classList.add('hidden');
+  document.getElementById('next-q-btn').classList.remove('hidden');
+}
+
+/* ---------- common ---------- */
+function recordTopic(topic, correct) {
+  if (!topicStats[topic]) topicStats[topic] = { correct: 0, total: 0 };
+  topicStats[topic].total++;
+  if (correct) topicStats[topic].correct++;
+}
+
+function toggleHint() {
+  const hint = document.getElementById('quiz-hint');
+  const btn = document.getElementById('hint-toggle-btn');
+  if (hint.classList.contains('hidden')) {
+    hint.classList.remove('hidden');
+    btn.innerText = 'Hide hint';
+  } else {
+    hint.classList.add('hidden');
+    btn.innerText = 'Need a hint? 💡';
+  }
+}
+
+function nextQuestion() {
+  if (currentQuizIndex < quizQuestions.length - 1) {
+    currentQuizIndex++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-active').classList.add('hidden');
+  document.getElementById('quiz-results').classList.remove('hidden');
+
+  document.getElementById('result-summary').innerText = 'You scored ' + quizScore + ' out of ' + quizQuestions.length;
+
+  // breakdown
+  const bd = document.getElementById('result-breakdown');
+  let html = '<h3 class="font-bold text-slate-800 mb-3">Performance breakdown</h3><ul class="space-y-2">';
+  Object.keys(topicStats).forEach(function (t) {
+    const s = topicStats[t];
+    const pct = Math.round((s.correct / s.total) * 100);
+    const colour = pct >= 80 ? 'text-sea-600' : (pct >= 50 ? 'text-amber-600' : 'text-crimson-500');
+    html += '<li class="flex justify-between gap-4"><span>' + t + '</span><span class="font-bold ' + colour + '">' + s.correct + ' / ' + s.total + ' (' + pct + '%)</span></li>';
+  });
+  html += '</ul>';
+  bd.innerHTML = html;
+
+  const ctx = document.getElementById('resultsChart').getContext('2d');
+  if (resultsChart) resultsChart.destroy();
+
+  resultsChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Correct', 'Incorrect'],
+      datasets: [{
+        data: [quizScore, quizQuestions.length - quizScore],
+        backgroundColor: ['#1E7A6F', '#B3122C'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: { legend: { position: 'bottom' } }
+    }
+  });
+}
+
+function resetQuiz() {
+  quizScore = 0;
+  currentQuizIndex = 0;
+  msqSelection = [];
+  answered = false;
+  topicStats = {};
+  document.getElementById('quiz-results').classList.add('hidden');
+  document.getElementById('quiz-intro').classList.remove('hidden');
+  document.getElementById('quiz-score-live').innerText = 'Score: 0';
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+updateCard();
+</script>
+</body>
+</html>

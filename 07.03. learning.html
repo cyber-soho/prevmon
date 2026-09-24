@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Cyber.SoHo">
+<meta name="copyright" content="© 2026 Cyber.SoHo — Asen Grozdanov. All rights reserved.">
+<meta name="description" content="Study Hub — 420-1C1-DW Preventative Monitoring, Class 7: Lesson 2.5 Prioritizing monitoring activities (flash cards and practice quiz). Cyber.SoHo Educational Hub.">
+<meta name="robots" content="noindex">
+<title>Class 7 Study Hub — 2.5 Prioritizing Monitoring Activities | 420-1C1-DW | Cyber.SoHo</title>
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+:root{--navy:#0F4C81; --deep:#0B3A63; --teal:#1E7A6F; --teal-soft:#E4F1EE; --sand:#FBEFD3; --sand-deep:#F3DFAE; --crimson:#B3122C; --crimson-soft:#F8E3E7; --amber:#C77C13;
+  --ink:#1B2431; --ink-2:#3E4A5A; --ink-3:#6B7686; --paper:#fff; --mist:#F4F6F9; --mist-2:#E9EDF2; --line:#D9DEE5;
+  --serif:Cambria,"Hoefler Text",Georgia,"Times New Roman",serif; --sans:Calibri,"Segoe UI","Helvetica Neue",Arial,sans-serif; --mono:Consolas,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0; font-family:var(--sans); background:var(--mist); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; font-size:17px; line-height:1.55}
+a{color:var(--navy)}
+button{font:inherit; cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+header{background:var(--paper); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50}
+header .wrap{max-width:1040px; margin:0 auto; padding:12px 16px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px}
+header .brand{display:flex; align-items:center; gap:12px}
+header .brand .tile{background:#fff; border:1px solid var(--line); border-radius:10px; padding:3px; display:flex}
+header .brand img{height:42px; width:auto; display:block}
+header .brand h1{font-family:var(--serif); font-size:1.25rem; margin:0; color:var(--deep); line-height:1.15}
+header .brand h1 small{display:block; font-family:var(--sans); font-size:.8rem; color:var(--ink-3); font-weight:400}
+nav.tabs{display:flex; background:var(--mist); padding:4px; border-radius:12px; gap:2px}
+nav.tabs button{border:0; background:transparent; color:var(--ink-2); font-weight:700; font-size:.95rem; padding:.5em 1.3em; border-radius:9px}
+nav.tabs button.active{background:var(--paper); color:var(--navy); box-shadow:0 1px 3px rgba(11,58,99,.2)}
+main{flex:1; width:100%; max-width:1040px; margin:0 auto; padding:28px 16px 48px}
+.tab{display:none} .tab.active{display:block; animation:fade .3s ease-out}
+@keyframes fade{from{opacity:0; transform:translateY(5px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+/* dashboard */
+.welcome{background:var(--deep); color:#fff; border-radius:24px; padding:30px 34px; box-shadow:0 12px 30px rgba(11,58,99,.25)}
+.welcome h2{font-family:var(--serif); font-size:2rem; margin:0 0 10px}
+.welcome p{color:#D6E2EE; max-width:64ch; margin:0}
+.welcome .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:24px}
+.welcome .stat{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:16px; padding:14px 16px; display:flex; gap:14px; align-items:center}
+.welcome .stat .ic{font-size:1.8rem}
+.welcome .stat small{display:block; text-transform:uppercase; letter-spacing:.12em; font-size:.68rem; color:#F3DFAE; font-weight:700}
+.welcome .stat b{font-size:1.15rem}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin-top:22px}
+.card{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:22px 24px}
+.card h3{font-family:var(--serif); color:var(--deep); margin:0 0 10px; font-size:1.2rem}
+.card ul{margin:0; padding-left:0; list-style:none}
+.card li{display:flex; gap:10px; margin:8px 0; font-size:.97rem; color:var(--ink-2)}
+.card.dark{background:#1c1917; color:#e7e5e4; border-color:#1c1917}
+.card.dark h3{color:#F3DFAE}
+.card.dark p{color:#d6d3d1; font-size:.97rem; margin:0}
+.card.legal{background:var(--sand); border-color:var(--sand-deep); border-left:6px solid var(--crimson)}
+.card.legal p{margin:0; font-size:.95rem}
+.lessons{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-top:12px}
+.lessons div{background:var(--mist); border-radius:12px; padding:10px 12px; font-size:.9rem}
+.lessons div b{display:block; color:var(--navy)}
+/* flash cards */
+.center{text-align:center}
+.center h2{font-family:var(--serif); color:var(--deep); margin:0}
+.center p{color:var(--ink-3); margin:4px 0 0; font-size:.95rem}
+.fc-wrap{max-width:560px; margin:24px auto 0; perspective:1200px}
+.fc-inner{position:relative; width:100%; min-height:300px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; display:grid}
+.fc-inner.flipped{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1; backface-visibility:hidden; -webkit-backface-visibility:hidden; display:flex; align-items:center; justify-content:center; padding:30px 34px; border-radius:24px; text-align:center; box-shadow:0 8px 20px rgba(11,58,99,.12)}
+.fc-front{background:var(--navy); color:#fff; font-family:var(--serif); font-size:1.45rem; font-weight:700; line-height:1.3}
+.fc-front small{display:block; font-family:var(--sans); font-size:.8rem; font-weight:400; margin-top:14px; color:#D6E2EE}
+.fc-back{background:var(--sand); border:2px solid var(--sand-deep); color:var(--ink); transform:rotateY(180deg); font-size:1.08rem; line-height:1.5}
+.fc-tag{display:inline-block; background:var(--teal-soft); color:var(--teal); font-family:var(--mono); font-size:.72rem; font-weight:700; border-radius:4px; padding:.1em .5em; margin-bottom:10px}
+.fc-nav{display:flex; align-items:center; justify-content:center; gap:22px; margin-top:22px}
+.fc-nav button{width:48px; height:48px; border-radius:50%; border:1px solid var(--line); background:var(--paper); font-size:1.2rem; box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.fc-nav button:hover{background:var(--mist)}
+.fc-nav .counter{font-family:var(--mono); color:var(--ink-3); font-size:.95rem}
+.progress{max-width:560px; margin:18px auto 0; height:8px; background:var(--mist-2); border-radius:999px; overflow:hidden}
+.progress div{height:100%; background:var(--teal); transition:width .3s}
+.fc-filter{display:flex; justify-content:center; flex-wrap:wrap; gap:6px; margin-top:16px}
+.fc-filter button{border:1px solid var(--line); background:var(--paper); border-radius:999px; padding:.3em .9em; font-size:.85rem; color:var(--ink-2)}
+.fc-filter button.on{background:var(--navy); color:#fff; border-color:var(--navy)}
+/* quiz */
+.q-intro{text-align:center; padding:44px 0}
+.q-intro .big{font-size:3rem}
+.q-intro h2{font-family:var(--serif); color:var(--deep); font-size:2rem; margin:8px 0}
+.q-intro p{color:var(--ink-3); margin:0 0 26px}
+.btn{border:2px solid var(--navy); background:var(--navy); color:#fff; font-weight:700; border-radius:14px; padding:.8em 2em; box-shadow:0 6px 16px rgba(15,76,129,.25); transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:var(--paper); color:var(--navy); box-shadow:none}
+.btn.teal{background:var(--teal); border-color:var(--teal)}
+.q-wrap{max-width:760px; margin:0 auto}
+.q-meta{display:flex; justify-content:space-between; font-weight:700; color:var(--ink-3); font-size:.9rem; margin-bottom:12px}
+.q-box{background:var(--paper); border:1px solid var(--line); border-radius:24px; padding:28px 30px; box-shadow:0 4px 14px rgba(11,58,99,.06)}
+.q-stem{font-size:1.2rem; font-weight:700; color:var(--deep); margin-bottom:6px}
+.q-kind{font-size:.85rem; color:var(--ink-3); margin-bottom:18px}
+.q-kind b{color:var(--crimson)}
+.opt{display:block; width:100%; text-align:left; padding:13px 16px; border-radius:14px; border:2px solid var(--mist-2); background:var(--paper); color:var(--ink); font-weight:600; margin:8px 0; transition:border-color .15s, background .15s}
+.opt:hover:not([disabled]){border-color:#9DC3B9; background:#F4FAF8}
+.opt.sel{border-color:var(--navy); background:#EEF4FA}
+.opt.ok{border-color:var(--teal); background:var(--teal-soft)}
+.opt.bad{border-color:var(--crimson); background:var(--crimson-soft)}
+.opt.miss{border-color:var(--amber); background:var(--sand)}
+.opt .why{display:block; font-weight:400; font-size:.9rem; color:var(--ink-2); margin-top:4px}
+.opt[disabled]{cursor:default}
+.feedback{display:none; margin-top:18px; padding:14px 16px; border-radius:14px; border:1px solid; font-size:.97rem}
+.feedback.on{display:block}
+.feedback.good{background:var(--teal-soft); border-color:#BFDDD7; color:#0F4D44}
+.feedback.badf{background:var(--crimson-soft); border-color:#E7B7C1; color:#7A0C1E}
+.hintbox{margin-top:18px; text-align:center}
+.hintbox button{border:0; background:transparent; color:var(--navy); font-weight:700; font-size:.85rem; text-decoration:underline}
+.hintbox p{display:none; margin:8px 0 0; font-size:.92rem; color:var(--ink-2); font-style:italic; background:var(--sand); border-radius:10px; padding:8px 12px}
+.hintbox p.on{display:block}
+.q-actions{display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap:10px}
+.q-actions .lesson{font-size:.85rem; color:var(--ink-3)}
+/* results */
+.results{text-align:center}
+.results h2{font-family:var(--serif); color:var(--deep); font-size:2rem; margin:0 0 6px}
+.results .sum{font-size:1.25rem; font-weight:700; margin:12px 0}
+.results .charts{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin:18px auto; max-width:820px}
+.results .charts .card svg{width:100%; height:auto; display:block}
+.review{max-width:820px; margin:16px auto; text-align:left}
+.review details{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:10px 14px; margin:8px 0}
+.review summary{cursor:pointer; font-weight:700; color:var(--deep)}
+.review summary.wrong{color:var(--crimson)}
+.review .rv{font-size:.92rem; color:var(--ink-2); margin:6px 0 0; padding-left:0; list-style:none}
+.review .rv li{margin:4px 0}
+/* footer (verbatim template, classes emulated locally) */
+.bg-stone-900{background:#1c1917} .text-stone-400{color:#a8a29e} .py-6{padding-top:1.5rem; padding-bottom:1.5rem} .mt-8{margin-top:2rem}
+.container{width:100%; max-width:1180px} .mx-auto{margin-left:auto; margin-right:auto} .text-center{text-align:center} .text-sm{font-size:.875rem; line-height:1.4}
+footer img{background:#fff; border-radius:8px; padding:3px}
+.terms-line{font-size:.8rem; color:#a8a29e; text-align:center; padding:0 16px 14px; background:#1c1917; margin:0}
+.terms-line a{color:#d6d3d1}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <span class="tile"><img src="data:image/png;base64,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" alt="Cyber.SoHo"></span>
+      <h1>Class 7 Study Hub — Prioritizing Monitoring Activities<small>420-1C1-DW Preventative Monitoring · Lesson 2.5 · Cyber.SoHo Educational Hub</small></h1>
+    </div>
+    <nav class="tabs" aria-label="Sections">
+      <button class="active" id="btn-dashboard" onclick="switchTab('dashboard')">Dashboard</button>
+      <button id="btn-flashcards" onclick="switchTab('flashcards')">Flash cards</button>
+      <button id="btn-quiz" onclick="switchTab('quiz')">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="dashboard" class="tab active">
+    <div class="welcome">
+      <h2>Welcome to the Class 7 Study Hub.</h2>
+      <p>Everything in this hub comes from the Class 7 lecture page: Lesson 2.5, <b>prioritizing monitoring activities according to resources and security requirements</b>, and the Lab 1 summary. Use the flash cards to fix the vocabulary and the numbers, then take the quiz to practise the reasoning: criticality, exposure, priority score, tiers, fitting the envelope, the monitoring plan.</p>
+      <div class="stats">
+        <div class="stat"><span class="ic">🗂️</span><div><small>Memorization</small><b id="stat-cards">— flash cards</b></div></div>
+        <div class="stat"><span class="ic">📝</span><div><small>Assessment</small><b id="stat-quiz">— practice questions</b></div></div>
+        <div class="stat"><span class="ic">🏭</span><div><small>Running example</small><b>Ébénisterie Val-des-Pins Inc. (fictional)</b></div></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>How to use this hub</h3>
+        <ul>
+          <li><span>✅</span><span>Flash cards: click a card to flip it; use the arrows or the keyboard (← → to move, Space to flip). Filter by lesson if you want to review one topic.</span></li>
+          <li><span>✅</span><span>Quiz: one question at a time. Single-answer questions have 4 options; multiple-select questions have 6 options and say in round brackets how many answers are expected, for example <b>(select 3)</b>.</span></li>
+          <li><span>✅</span><span>Every option carries an explanation after you answer, and every question has a hint. The result page shows your score by lesson and lets you review each question, then try again.</span></li>
+          <li><span>✅</span><span>Quiz 2 (5 %) covers all material to date; this hub is for self-study and is not graded.</span></li>
+        </ul>
+      </div>
+      <div class="card dark">
+        <h3>What to remember</h3>
+        <p>Two inputs — <b>resources</b> and <b>security requirements</b> — produce one ordered, written list. Criticality is the <b>highest</b> of the three impacts (how bad); exposure is the sum of <b>five observed facts</b> (how likely); the priority score is criticality <b>×</b> exposure; the score gives the tier, the tier and the tie-breakers give the order, and the order is fitted into the <b>resource envelope</b> — reduce before you defer, and document every override in the monitoring plan.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3>The lessons covered</h3>
+      <div class="lessons">
+        <div><b>2.5.1</b>Why prioritize: two inputs, one order; the resource envelope</div>
+        <div><b>2.5.2</b>Criticality: three impact questions and the high-water mark</div>
+        <div><b>2.5.3</b>Exposure: the five factors, the thresholds, the review date</div>
+        <div><b>2.5.4</b>Priority score, tiers, tie-breakers, fit, override, the plan</div>
+        <div><b>Lab 1</b>Map the network and write its monitoring plan (5 %)</div>
+      </div>
+    </div>
+    <div class="card legal" style="margin-top:18px">
+      <p>Educational material — Cyber.SoHo / Asen Grozdanov. © 2026 Cyber.SoHo. All rights reserved. The organization, the assets, the people and the incidents used here are fictional. Use of this file is subject to the <a href="https://cyber-soho.github.io/prevmon/00.01.%20cyber.soho%20-%20legal.html" target="_blank" rel="noopener">Cyber.SoHo Legal Notice, Terms of Use and Acceptable Use Policy, v2.0</a> (sections 4, 6 and 7.2). Nothing in this hub authorizes monitoring, capturing or scanning any real network.</p>
+    </div>
+  </section>
+
+  <section id="flashcards" class="tab">
+    <div class="center">
+      <h2>Flash cards</h2>
+      <p>Click the card to flip it; use the arrows to move between cards.</p>
+    </div>
+    <div class="fc-filter" id="fc-filter"></div>
+    <div class="fc-wrap">
+      <div class="fc-inner" id="fc-inner" tabindex="0" role="button" aria-label="Flash card — click or press Space to flip" onclick="this.classList.toggle('flipped')">
+        <div class="fc-face fc-front"><div><span class="fc-tag" id="fc-tag-f"></span><div id="fc-front"></div><small>click to flip</small></div></div>
+        <div class="fc-face fc-back"><div><span class="fc-tag" id="fc-tag-b"></span><div id="fc-back"></div></div></div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button type="button" onclick="prevCard()" aria-label="Previous card">◀</button>
+      <span class="counter" id="fc-counter">1 / 1</span>
+      <button type="button" onclick="nextCard()" aria-label="Next card">▶</button>
+    </div>
+    <div class="progress"><div id="fc-progress" style="width:0%"></div></div>
+  </section>
+
+  <section id="quiz" class="tab">
+    <div class="q-intro" id="quiz-intro">
+      <div class="big">🏆</div>
+      <h2>Ready to check yourself?</h2>
+      <p id="quiz-intro-text">One question at a time, with a hint and an explanation for every option.</p>
+      <button class="btn" type="button" onclick="startQuiz()">Start the quiz</button>
+    </div>
+    <div class="q-wrap" id="quiz-active" style="display:none">
+      <div class="q-meta"><span id="q-progress">Question 1</span><span id="q-score">Score: 0</span></div>
+      <div class="q-box">
+        <div class="q-stem" id="q-stem"></div>
+        <div class="q-kind" id="q-kind"></div>
+        <div id="q-options"></div>
+        <div class="feedback" id="q-feedback"></div>
+        <div class="hintbox"><button type="button" id="hint-btn" onclick="toggleHint()">Need a hint? 💡</button><p id="q-hint"></p></div>
+      </div>
+      <div class="q-actions">
+        <span class="lesson" id="q-lesson"></span>
+        <span><button class="btn teal" type="button" id="check-btn" onclick="checkAnswer()" style="display:none">Check my answer</button>
+        <button class="btn" type="button" id="next-btn" onclick="nextQuestion()" style="display:none">Next question</button></span>
+      </div>
+    </div>
+    <div class="results" id="quiz-results" style="display:none">
+      <h2>Quiz complete</h2>
+      <div class="sum" id="result-summary"></div>
+      <div class="charts">
+        <div class="card"><h3>Overall</h3><div id="chart-donut"></div></div>
+        <div class="card"><h3>By lesson</h3><div id="chart-bars"></div></div>
+      </div>
+      <div class="review" id="review"></div>
+      <button class="btn ghost" type="button" onclick="resetQuiz()">Try again</button>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-6 mt-8">
+        <div class="container mx-auto text-center text-sm">
+            <p style="display:flex; justify-content:center; align-items:center; gap:8px; margin:0;">
+				<img src="data:image/png;base64,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"
+					 alt="Cyber Soho"
+					 style="height:50px;">
+				<span>Educational Hub &copy; 2026 | From the Industry to the Classroom — Building the IT’s Future, Today and Together !
+				<br>ALL Rights Reserverd</br>
+			</p>
+        </div>
+    </footer>
+<p class="terms-line">© 2026 Cyber.SoHo — Educational Hub. All rights reserved. Educational content only. Use of this file is subject to the <a href="https://cyber-soho.github.io/prevmon/00.01.%20cyber.soho%20-%20legal.html" target="_blank" rel="noopener">Cyber.SoHo Legal Notice, Terms of Use and Acceptable Use Policy</a>. No affiliation with any vendor, platform or institution.</p>
+
+<script>
+(function () {
+  'use strict';
+  const CARDS = {
+    1: [
+      ['Prioritization', 'Putting monitoring activities in order of importance, so that the most important ones are done first and receive the largest share of the available resources.'],
+      ['Monitoring activity', 'A defined, repeatable observation of one part of the network. It names a data source, a collection method and a review method — for example, "collect the FW-01 log every day and review it every morning".'],
+      ['Resource envelope', 'The total amount of each resource dedicated to monitoring, in measurable units: MB (megabytes) per day of storage, minutes per day of analyst time, number of licences. Agreed with the owner and written in the plan.'],
+      ['The four sources of security requirements', 'Laws (Law 25 in Québec), contracts (the CNC vendor, the cloud e-mail provider), internal policies (the owner\'s decisions), and the monitoring needs identified in Lesson 2.4.'],
+      ['Retention', 'The length of time collected data is kept. It multiplies the storage need: with 90 days of retention, 200 GB of disk allows only about 2,275 MB of new data per day (200 × 1024 ÷ 90).']
+    ],
+    2: [
+      ['Criticality', 'How much the organization would suffer if the asset stopped doing its job, or if its data were disclosed or corrupted. A statement about consequences, not about attackers — it changes when the business changes.'],
+      ['High-water mark rule', 'The criticality of an asset is the highest of its three impact ratings (confidentiality, integrity, availability). One severe impact (3) is enough to make the asset critical.'],
+      ['RTO (Recovery Time Objective)', 'The longest interruption the organization can tolerate for a given asset before the damage becomes serious. A short RTO means a high availability impact.'],
+      ['Single point of failure', 'A component whose failure stops everything that depends on it: FW-01 for Internet access and the hosted e-mail, SW-01 for the whole server room.'],
+      ['Exclusion', 'An asset the owner removed from monitoring (the guest Wi-Fi). It is not rated, but it is recorded in the plan with the reason and the date, so that the gap is visibly a decision and not an oversight.']
+    ],
+    3: [
+      ['Exposure', 'The degree to which an asset can be reached by a threat, combined with the degree to which that threat could succeed because of a vulnerability. It is the likelihood side of risk; criticality is the impact side.'],
+      ['The five exposure factors', 'E1 Internet contact · E2 known weakness · E3 people and media · E4 privilege · E5 history. Each is observed as absent (0) or present (1); the score is their sum, 0 to 5.'],
+      ['Score → rating', 'Score 0–1 → Low (1); 2–3 → Moderate (2); 4–5 → High (3). The same 1–3 scale as criticality, so that the two ratings can be combined in Lesson 2.5.4.'],
+      ['CVE, NVD and CVSS', 'CVE (Common Vulnerabilities and Exposures): the public catalogue of known vulnerabilities, each with a unique identifier. NVD (National Vulnerability Database, NIST): the same entries with a CVSS (Common Vulnerability Scoring System) severity score from 0 to 10.'],
+      ['Review date', 'Every exposure rating carries one, because exposure changes: a firmware update removes E2, a past incident ages out of E5 after twelve months, and a new remote-access rule adds E1 overnight.']
+    ],
+    4: [
+      ['Priority score', 'Criticality × exposure, from 1 to 9. Multiplied rather than added: an asset must be both critical and exposed to reach the top (3 × 3 = 9), while 3 × 1 and 1 × 3 both land in the middle.'],
+      ['Monitoring tiers', 'Tier 1 (score 6–9): continuous collection, immediate alerts, daily review, 90-day retention. Tier 2 (3–4): weekly review, 30 days. Tier 3 (1–2): no dedicated collection; baseline check only.'],
+      ['The three tie-breaking rules', 'Same score? Higher criticality first; then higher exposure; then the activity with the lower daily cost, because a cheaper activity gives protection sooner for the same budget.'],
+      ['Reduced versus deferred activity', 'Reduced: a lighter version that fits — connection records instead of a full capture, filtered logs instead of all logs. Deferred: an accepted gap, written in the plan with its reason and a review date.'],
+      ['Override', 'A documented change of the computed order, with a reason. Accepted without argument for a dependency (NAS-01 is the recovery path of every Tier 1 asset) or a legal obligation (personal information). Any other override is signed off by the owner.']
+    ]
+  };
+
+  const QUIZ = {
+    1: [
+      { k: 'mcq', q: 'Competency criterion 2.3 asks you to prioritize monitoring activities "in accordance with" two inputs. Which two?', hint: 'The lesson title says it: two inputs, one order. Re-read the wording of the criterion in the course outline.', o: [
+        ['The number of users and the number of devices', false, 'Counts describe the size of the network; they say nothing about what can be afforded or what must be protected.'],
+        ['The network resources and the security requirements', true, 'These are the two inputs of the criterion, and the whole lesson places them side by side.'],
+        ['The price of the tools and the vendor\'s recommendations', false, 'Tool prices are one resource among several; a vendor\'s advice is not a security requirement.'],
+        ['The topology diagram and the incident history', false, 'Both feed the ratings later (criticality and factor E5), but they are not the two inputs named by the criterion.']] },
+      { k: 'mcq', q: 'The owner approved 200 GB of disk for the monitoring machine and a retention of 90 days. About how much new data may arrive per day?', hint: 'Convert to megabytes (× 1024), then divide by the number of days the disk must hold at once.', o: [
+        ['2,275 MB per day', true, '200 × 1024 = 204,800 MB; ÷ 90 days ≈ 2,275 MB of new data per day.'],
+        ['200 MB per day', false, 'That would fill only 18 GB in 90 days — the retention was not taken into account.'],
+        ['22 GB per day', false, 'At 22 GB per day the disk would be full in nine days, not ninety.'],
+        ['9,165 MB per day', false, '9,165 MB is the total demand of the wish list in Table 1, not the envelope.']] },
+      { k: 'mcq', q: 'Why does the lesson call "collect everything now and sort it out later" a beginner error?', hint: 'Three costs are named in the "Common beginner error" box.', o: [
+        ['Because storage is always free anyway', false, 'Storage is one of the scarce resources; the sentence contradicts the lesson.'],
+        ['Because unreviewed data costs storage, creates a legal duty to protect it, and hides the few important events among millions', true, 'These are exactly the three consequences listed: cost, legal duty (Legal Notice sections 6.7 and 7.2), and the quality-of-results problem.'],
+        ['Because monitoring tools can only collect one source at a time', false, 'Tools can collect many sources; the problem is that nobody reviews the result.'],
+        ['Because Law 25 forbids collecting logs', false, 'Law 25 does not forbid logging; it obliges the enterprise to protect the personal information that logs contain.']] },
+      { k: 'mcq', q: 'Which statement about the resource envelope is correct?', hint: 'Who agrees to the envelope, and in what units is it written?', o: [
+        ['It is the technician\'s private estimate and stays out of the plan', false, 'The opposite: the envelope is agreed with the owner and written in the plan.'],
+        ['It is expressed in measurable units and agreed with the owner', true, 'MB per day, minutes per day and licences, agreed with the owner and dated in the plan.'],
+        ['It counts only money and licences', false, 'People and time, storage, processing capacity and bandwidth are also resources.'],
+        ['The monitoring tool recalculates it automatically', false, 'No tool decides how much of the organization\'s resources go to monitoring; a person does.']] },
+      { k: 'msq', n: 3, q: 'Which of the following are resources consumed by monitoring activities, as listed in the lesson? (select 3)', hint: 'Four families were named: people and time, storage, processing capacity and bandwidth, money and licences.', o: [
+        ['People and time', true, 'Someone must read what was collected; an alert nobody reviews protects nothing.'],
+        ['Storage', true, 'Logs and captures are files, and retention multiplies the need.'],
+        ['The number of customers', false, 'Customers are a business quantity, not a resource that monitoring consumes.'],
+        ['Money and licences', true, 'Commercial tools are priced per device or per GB per day; free tools cost learning and maintenance hours.'],
+        ['The size of the building', false, 'Floor space plays no part in the lesson\'s list of resources.'],
+        ['The number of employees', false, 'The number of employees affects exposure (factor E3), not the resource envelope.']] },
+      { k: 'msq', n: 2, q: 'Which two facts in Table 1 show that the wish list does not fit in the envelope? (select 2)', hint: 'Compare the two totals of the wish list with the two numbers of the envelope row.', o: [
+        ['Total storage demand of 9,165 MB per day against 2,275 MB per day', true, 'The storage demand is about four times the envelope.'],
+        ['Total review time of 110 minutes per day against 60 minutes per day', true, 'The time demand is almost double the envelope.'],
+        ['The firewall cannot send a syslog', false, 'FW-01 sends its log by syslog (activity A1); this is not the problem.'],
+        ['The owner approved no disk at all', false, 'The owner approved 200 GB; the difficulty is that the wish list needs far more.'],
+        ['The retention is 30 days', false, 'The approved retention is 90 days.'],
+        ['The switches cannot be monitored', false, 'Both switches send syslog (activity A6).']] }
+    ],
+    2: [
+      { k: 'mcq', q: 'NAS-01 is rated confidentiality 3, integrity 3 and availability 2. What is its criticality?', hint: 'Apply the high-water mark rule.', o: [
+        ['2, because nobody uses it during the day', false, 'The availability rating is 2, but criticality takes the highest of the three ratings, not the lowest or the most visible.'],
+        ['8, the sum of the three ratings', false, 'The method never adds the three ratings; it keeps the highest one.'],
+        ['3, the highest of the three ratings', true, 'High-water mark: one severe impact (a corrupted backup discovered on the day it is needed) is enough.'],
+        ['2.7, the average', false, 'Averaging would let two harmless answers hide one severe consequence — exactly what the rule prevents.']] },
+      { k: 'mcq', q: 'Which public standard provides the 1–3 impact scale and the high-water mark rule used for criticality in this course?', hint: 'It is a NIST publication that maps directly onto the CIA triad.', o: [
+        ['FIPS 199, issued by NIST', true, 'FIPS (Federal Information Processing Standards) Publication 199 defines the low / moderate / high impact levels and the high-water mark.'],
+        ['The Criminal Code of Canada', false, 'The Criminal Code defines offences such as unauthorized use of a computer; it does not rate assets.'],
+        ['CVSS', false, 'CVSS (Common Vulnerability Scoring System) scores vulnerabilities from 0 to 10 — it belongs to exposure (Lesson 2.5.3), not criticality.'],
+        ['Law 25', false, 'Law 25 explains why personal information gets a confidentiality impact of 3, but it does not define the scale.']] },
+      { k: 'mcq', q: 'A firewall that cost 400 $ is rated criticality 3. Is this consistent with the lesson\'s rules?', hint: 'What is rated: the device, or the consequence for the organization?', o: [
+        ['No — cheap devices are always rated 1', false, 'Price is explicitly excluded from the rating.'],
+        ['Yes — criticality measures the impact on the organization, not the replacement price of the device', true, 'The lesson says it directly: a 400 $ firewall can be the most critical asset in the building.'],
+        ['No — only servers can be rated 3', false, 'Any asset can be critical: FW-01 and SW-01 are network devices and both are rated 3.'],
+        ['Yes — every network device is rated 3 by default', false, 'There is no default; SW-02 and AP-01 are rated 2, PRN-01 is rated 1.']] },
+      { k: 'mcq', q: 'How is the guest Wi-Fi network handled in the criticality register of Val-des-Pins?', hint: 'The owner excluded it in Lesson 2.3. What does the plan have to show about that decision?', o: [
+        ['It is rated 1 because guests are harmless', false, 'An excluded asset is not rated at all.'],
+        ['It is rated 3 because it is exposed', false, 'Exposure is a different rating, and an excluded asset receives neither.'],
+        ['It is recorded as an exclusion, with the reason and the date, and not rated', true, 'An auditor or the next technician must see that the gap was a decision, not an oversight.'],
+        ['It is silently left out of the plan', false, 'A gap that is not written down is a surprise; exclusions belong in the plan.']] },
+      { k: 'msq', n: 3, q: 'Which facts give an asset a confidentiality impact of 3 (severe)? (select 3)', hint: 'Re-read the "severe" line of the confidentiality question.', o: [
+        ['It stores employees\' personal information protected by Law 25', true, 'Personal information protected by law is the first example of a severe confidentiality impact.'],
+        ['It holds passwords or financial data', true, 'Passwords and financial data are named in the severe category.'],
+        ['It prints internal documents', false, 'Internal documents are "serious" (2) at most; PRN-01 is rated 1.'],
+        ['It stores trade secrets, such as customer drawings declared confidential by policy', true, 'Trade secrets are named in the severe category; SRV-FILE-01 is the example.'],
+        ['A spare unit is available', false, 'A spare lowers the availability impact; it says nothing about confidentiality.'],
+        ['It is used only at night', false, 'Usage hours affect availability, not confidentiality.']] },
+      { k: 'msq', n: 2, q: 'Which two practices keep the criticality ratings consistent, according to the lesson? (select 2)', hint: 'Three rules follow the three questions; two of them are listed here.', o: [
+        ['Rate assets that hold the same data and play the same role as a group', true, 'The five office workstations are rated as one group; the register notes it.'],
+        ['Write one sentence of justification per asset', true, 'A number without a reason cannot be defended when the owner asks why.'],
+        ['Rate assets by their replacement price', false, 'Price is explicitly excluded.'],
+        ['Rate everything 3 to be safe', false, 'If everything is critical, nothing is prioritized.'],
+        ['Let the monitoring tool assign the rating', false, 'The rating is a decision made with the owner, not a tool output.'],
+        ['Change the rating whenever a new vulnerability is published', false, 'Criticality is about consequences; a new vulnerability changes exposure (E2), not criticality.']] }
+    ],
+    3: [
+      { k: 'mcq', q: 'PC-SHOP-01 is observed with E1 = 1, E2 = 1, E3 = 1, E4 = 0 and E5 = 1. What is its exposure rating?', hint: 'Add the five factors, then apply the thresholds 0–1 / 2–3 / 4–5.', o: [
+        ['Low (1)', false, 'A score of 4 is above the Low range (0–1).'],
+        ['Moderate (2)', false, 'A score of 4 is above the Moderate range (2–3).'],
+        ['High (3)', true, '1 + 1 + 1 + 0 + 1 = 4, and 4–5 is High.'],
+        ['4 — the score is the rating', false, 'The score (0–5) is converted to the 1–3 scale so that it can be combined with criticality.']] },
+      { k: 'mcq', q: 'CNC-PC-01 runs an unsupported operating system that the vendor contract forbids updating. Which factor does this set to 1?', hint: 'Which factor is about missing updates, unsupported systems and default passwords?', o: [
+        ['E1 — Internet contact', false, 'E1 concerns Internet reachability or content received from the Internet.'],
+        ['E2 — Known weakness', true, 'An unsupported system or missing security updates is the definition of factor E2.'],
+        ['E4 — Privilege', false, 'E4 concerns administrative credentials that would let an attacker reach other assets.'],
+        ['E5 — History', false, 'E5 concerns incidents recorded in the last 12 months (the virus on the USB stick, for CNC-PC-01).']] },
+      { k: 'mcq', q: 'In this course, how do you find out which software version a device runs, to decide factor E2?', hint: 'Which action is observation, and which is an intrusive act reserved for a later course?', o: [
+        ['By scanning the network with a vulnerability scanner', false, 'Scanning is intrusive and reserved for 420-3C1-DW on designated targets (Legal Notice sections 6.3 and 7.6).'],
+        ['From the documentation, the device\'s own screen, or the owner', true, 'Reading documentation and configuration screens is observation, which this course permits.'],
+        ['By guessing from the purchase date', false, 'A guess cannot be defended in the register.'],
+        ['By logging in to the vendor\'s portal with the owner\'s credentials', false, 'Using someone else\'s credentials is prohibited (Legal Notice section 6.3).']] },
+      { k: 'mcq', q: 'Which statement about exposure and criticality is correct?', hint: 'Compare NAS-01 and PC-SHOP-01 in Tables 2 and 3.', o: [
+        ['They are always equal', false, 'NAS-01 is critical (3) with low exposure (1); PC-SHOP-01 is the reverse.'],
+        ['They are independent: NAS-01 is critical but barely exposed, PC-SHOP-01 is not critical but highly exposed', true, 'This is the first property of exposure named in the lesson, and the reason both ratings are needed.'],
+        ['They cannot both use a 1–3 scale', false, 'They deliberately use the same scale so that they can be combined.'],
+        ['Exposure replaces criticality in the final order', false, 'Lesson 2.5.4 multiplies the two; neither replaces the other.']] },
+      { k: 'msq', n: 3, q: 'Which observations set factor E1 (Internet contact) to 1? (select 3)', hint: 'E1 covers being reachable from the Internet and regularly receiving content from it.', o: [
+        ['A port-forwarding rule makes the asset reachable from the Internet', true, 'Reachability from the Internet is the first part of E1.'],
+        ['The asset regularly receives e-mail attachments', true, 'Regularly receiving content from the Internet is the second part of E1.'],
+        ['The asset still uses a default password', false, 'A default or shared password is factor E2.'],
+        ['The asset is used through a shared account', false, 'A shared account is factor E3 (people and media).'],
+        ['A remote-management service is reachable from the Internet', true, 'A remote-management service open to the Internet is an example given for E1 (FW-01).'],
+        ['An incident involved the asset last year', false, 'A past incident is factor E5.']] },
+      { k: 'msq', n: 2, q: 'Factors E3 and E5 involve facts about employees. Which two rules does the legal reminder impose? (select 2)', hint: 'Keep it about the asset; never about the person.', o: [
+        ['Keep the information factual, minimal and about the asset', true, 'Exactly the wording of the reminder.'],
+        ['Never name the person in the register', true, 'The register records that a phishing message was opened on PC-ACCT-01, not who opened it.'],
+        ['Attach the employee\'s full personnel file', false, 'Collecting more personal information than needed contradicts sections 6.7 and 7.2 of the Legal Notice.'],
+        ['Post the register on the staff notice board', false, 'The register contains security-relevant information and is confidential.'],
+        ['Monitor the employee\'s personal phone', false, 'Monitoring a person is never a course activity and may be a criminal offence.'],
+        ['Record the person\'s home address for context', false, 'The address has nothing to do with the asset\'s exposure.']] }
+    ],
+    4: [
+      { k: 'mcq', q: 'An asset rated criticality 3 and exposure 1 has which priority score?', hint: 'Score = criticality × exposure.', o: [
+        ['4', false, '3 + 1 = 4 would be the sum; the method multiplies.'],
+        ['3', true, '3 × 1 = 3 — the case of NAS-01, a critical asset that almost nothing can reach.'],
+        ['9', false, '9 requires criticality 3 and exposure 3 (FW-01).'],
+        ['1', false, '1 requires criticality 1 and exposure 1.']] },
+      { k: 'mcq', q: 'Why does the method multiply the two ratings instead of adding them?', hint: 'Compare 3 × 1, 1 × 3 and 3 × 3 with 3 + 1, 1 + 3 and 3 + 3.', o: [
+        ['Because multiplication is faster to compute', false, 'Speed is irrelevant for twelve assets.'],
+        ['Because an asset needs both a serious consequence and a real likelihood to deserve continuous attention; with addition the gap between 3 × 1 and 3 × 3 almost disappears', true, 'Multiplication gives 3, 3 and 9; addition gives 4, 4 and 6 — the difference between "worth watching" and "watch first" would fade.'],
+        ['Because NIST forbids addition', false, 'NIST SP 800-30 describes risk as a function of likelihood and impact; it does not prescribe an arithmetic operation for this course.'],
+        ['Because scores above 9 are impossible', false, 'The range 1–9 is a consequence of multiplying two 1–3 ratings, not the reason for it.']] },
+      { k: 'mcq', q: 'The full capture of CNC-PC-01 (900 MB per day) does not fit in the remaining storage. What does the lesson say to do first?', hint: 'The lesson says "do not drop it" — what comes before deferring?', o: [
+        ['Drop the asset from the plan', false, 'A Tier 1 activity is not dropped; it is reduced first, and deferred only if the reduced version does not fit either.'],
+        ['Try a reduced activity, such as connection records instead of a full capture', true, 'Connection records cost one tenth of the volume (90 MB) and keep CNC-PC-01 in the plan.'],
+        ['Increase the envelope without telling the owner', false, 'The envelope is agreed with the owner; changing it alone is not a decision the technician can make.'],
+        ['Move it to Tier 3', false, 'The tier follows the score (6 → Tier 1); the budget does not change the tier.']] },
+      { k: 'mcq', q: 'Why is the override that puts NAS-01 back into the plan accepted without argument?', hint: 'Two reasons are accepted without argument: a dependency and a legal obligation. Which one applies?', o: [
+        ['Because the technician prefers backups', false, 'A preference is not one of the two accepted reasons; it would need the owner\'s sign-off.'],
+        ['Because NAS-01 is the recovery path of every Tier 1 asset — a dependency', true, 'A backup that nobody checks leaves every Tier 1 asset without a recovery path.'],
+        ['Because NAS-01 is the most exposed asset', false, 'NAS-01 has the lowest exposure in the register (score 1).'],
+        ['Because the backup reports cost the most storage', false, 'They cost 5 MB per day — the cheapest activity in the list.']] },
+      { k: 'msq', n: 3, q: 'Which events trigger a review of the priorities in the monitoring plan? (select 3)', hint: 'Three triggers are named in the "review cycle" passage.', o: [
+        ['A new Internet-facing service or remote-access rule', true, 'A change in the network is the first trigger.'],
+        ['An incident involving any asset', true, 'An incident sets E5 to 1 and often reveals a wrong rating.'],
+        ['The fixed quarterly schedule', true, 'Quarterly is the reasonable fixed schedule for a business of this size.'],
+        ['A change of printer toner', false, 'Routine consumables do not change any rating.'],
+        ['A public holiday', false, 'Holidays change nothing in the register.'],
+        ['The technician\'s vacation', false, 'Absences affect who reviews, not what is prioritized.']] },
+      { k: 'msq', n: 3, q: 'Which columns belong in section 6, "Ordered activities", of the monitoring plan? (select 3)', hint: 'See Table 5, row 6.', o: [
+        ['Rank', true, 'The order of work is the point of the section.'],
+        ['Cost in MB per day', true, 'Each activity carries its storage cost so that the fit against the envelope can be checked.'],
+        ['Status: included, reduced or deferred', true, 'The decision for each activity must be visible.'],
+        ['The employee\'s password', false, 'Passwords never appear in any plan or register.'],
+        ['The purchase price of the device', false, 'Price plays no part in priority.'],
+        ['The name of the person who opened the phishing e-mail', false, 'Facts about people are kept minimal and about the asset (Legal Notice sections 6.7 and 7.2).']] }
+    ]
+  };
+
+  // Additional cards for revision (same lessons, same source page)
+  const EXTRA_CARDS = {
+    1: [
+      ['The three questions of prioritization, in order', '1. Which assets matter most? (criticality, 2.5.2) · 2. Which are most likely to be attacked or to fail? (exposure, 2.5.3) · 3. Within the budget, what is done first, reduced or deferred? (fitting, 2.5.4).'],
+      ['The envelope of Val-des-Pins in daily units', '200 GB × 1024 MB ÷ 90 days ≈ 2,275 MB of new data per day; 5 hours × 60 ÷ 5 working days = 60 minutes of review per day.'],
+      ['The wish list of Table 1', 'Ten candidate activities totalling 9,165 MB and 110 minutes per day — about four times the storage envelope and almost double the time envelope.'],
+      ['Risk assessment (NIST SP 800-30)', 'A structured evaluation of the risks an organization faces; risk is a function of the likelihood of an event and of its impact. Criticality gives the impact, exposure gives the likelihood.']
+    ],
+    2: [
+      ['The 1–3 impact scale', '1 limited · 2 serious · 3 severe — answered three times per asset, for confidentiality, integrity and availability.'],
+      ['Why PC-ACCT-01 is confidentiality 3', 'It holds payroll and employee personal information protected by Law 25; the CAI (Commission d\'accès à l\'information du Québec) can investigate a complaint.'],
+      ['Rating as a group', 'Assets that hold the same data and play the same role (the five office workstations) are rated once, as a group, and the register says so.'],
+      ['The result of the criticality register', '7 critical (3), 3 serious (2), 2 limited (1), 1 exclusion (guest Wi-Fi) — criticality alone cannot order the work.']
+    ],
+    3: [
+      ['Threat and vulnerability', 'A threat is any potential cause of an unwanted incident (attacker, malicious program, human error, hardware failure); a vulnerability is a weakness in the asset or in the way it is used.'],
+      ['Blast radius', 'The set of assets an attacker could reach from a compromised one — what factor E4 (privilege) measures.'],
+      ['The two extremes of Table 3', 'FW-01 and PC-SHOP-01 score 4 (High); NAS-01 scores 1 (Low). PC-SHOP-01 holds nothing of value but is wide open; NAS-01 is critical but barely reachable.'],
+      ['Observation versus scanning', 'Reading CVE and NVD entries or a device\'s own screen is observation; scanning a network to discover versions is an intrusive act reserved for 420-3C1-DW on designated targets (Legal Notice 6.3, 7.6).']
+    ],
+    4: [
+      ['The order of work of Val-des-Pins', 'FW-01 (9), then MAIL-CLOUD, PC-ACCT-01, SW-01, SRV-FILE-01, CNC-PC-01 (reduced) at 6, SW-02, then NAS-01 by override; AP-01, PC-OFFICE-01…05, PC-SHOP-01 and the full office capture deferred to Oct 16.'],
+      ['Envelope used after the override', '1,875 of 2,275 MB per day (82 %) and 60 of 60 minutes — four activities deferred, one reduced, one override recorded.'],
+      ['The nine sections of the monitoring plan', '1 scope and network map · 2 constraints · 3 monitoring needs · 4 asset register · 5 resource envelope · 6 ordered activities · 7 exclusions and deferred activities · 8 review cycle · 9 legal and privacy statement.'],
+      ['The three review triggers', 'A change in the network (new asset, Internet-facing service, remote-access rule); an incident involving any asset (E5 becomes 1); the fixed schedule — quarterly for a small business.']
+    ],
+    5: [
+      ['Lab 1 deliverables', '1. The network map: a topology diagram with every asset labelled with the naming key. 2. The monitoring plan: the nine sections of Table 5, with your own justifications.'],
+      ['Lab 1 grading and submission', 'Worth 5 % of the final grade; submitted online by the deadline in the lab guide; late policy 10 % per day, nothing accepted after seven days.'],
+      ['The three rules of every lab', 'Fictional only (never a real organization, person or credential); authorized lab environment only (never home, campus or workplace Wi-Fi); one signed copy of Annex A of the Legal Notice before any laboratory access.'],
+      ['How the Integrative Project continues', 'Lab 2 (Oct 3) installs the monitoring tool, builds the baseline and sets alerts — Tier 1 first; Lab 3 (Oct 16) detects, diagnoses and reports an anomaly and proposes optimizations, starting from the deferred activities.']
+    ]
+  };
+  const EXTRA_QUIZ = {
+    5: [
+      { k: 'mcq', q: 'Which two deliverables does Lab 1 ask for?', hint: 'Part 1 of the Integrative Project: map, then plan.', o: [
+        ['A network map and a monitoring plan', true, 'The topology diagram with the naming key, and the plan with the nine sections of Table 5.'],
+        ['A packet capture and a firewall rule set', false, 'Nothing in Lab 1 requires touching a network; captures come only in Lab 2, inside an isolated lab.'],
+        ['A vulnerability scan report and a risk register', false, 'Scanning is reserved for 420-3C1-DW; the asset register is part of the plan, not a separate scan.'],
+        ['A tool installation guide and a baseline', false, 'These are Lab 2 (Oct 3) deliverables.']] },
+      { k: 'mcq', q: 'A student uses their employer\'s real network diagram and real internal addresses in the Lab 1 plan. According to the lab rules, this is:', hint: 'First rule of every lab.', o: [
+        ['Acceptable, because it makes the plan realistic', false, 'Realism is not the criterion; real organizations and real data are excluded from every submission.'],
+        ['Not acceptable — the organization, assets and data must be fictional (Legal Notice sections 6.4, 6.7 and 18.2)', true, 'Exactly the first of the three rules that apply to every lab of the course.'],
+        ['Acceptable if the employer is not named', false, 'De-identification does not make real internal data fictional; the rule excludes it.'],
+        ['Acceptable with a verbal permission from a colleague', false, 'Verbal permission is not authorization, and a colleague is usually not entitled to give it.']] },
+      { k: 'msq', n: 3, q: 'Which sections belong to the Lab 1 monitoring plan (Table 5)? (select 3)', hint: 'Nine sections follow the four lessons of Topic 2 and the two inputs of tonight\'s criterion.', o: [
+        ['Resource envelope', true, 'Section 5: storage per day and retention, analyst minutes per day, licences, agreed with the owner and dated.'],
+        ['Exclusions and deferred activities', true, 'Section 7: asset or activity, reason, decided by, date, review date.'],
+        ['Employee performance reviews', false, 'Facts about people are kept minimal and about the asset; performance reviews have no place in a monitoring plan.'],
+        ['Legal and privacy statement', true, 'Section 9: all data is fictional; how captures and logs will be stored, minimized and deleted.'],
+        ['Purchase prices of the equipment', false, 'Price plays no part in priority or in the plan.'],
+        ['The passwords of the monitored devices', false, 'Passwords never appear in any plan or register.']] },
+      { k: 'msq', n: 2, q: 'Which statements about the Integrative Project are correct? (select 2)', hint: 'Three connected labs on the same fictional network.', o: [
+        ['Lab 2 installs the monitoring tool for the Tier 1 assets first, in the order of work of Lab 1', true, 'Lab 2 (Oct 3) builds on the priority order written in Lab 1.'],
+        ['Lab 3 starts its optimizations from the deferred activities of Lab 1', true, 'Lab 3 (Oct 16) reconsiders the deferred activities (Lesson 6.3).'],
+        ['Each lab uses a different fictional organization', false, 'The three labs use the same network, Ébénisterie Val-des-Pins.'],
+        ['Assembling the three parts is mandatory and graded', false, 'Assembling the whole project is optional and assessed formatively only.'],
+        ['Lab 1 requires a live packet capture on the campus Wi-Fi', false, 'Nothing in Lab 1 touches a network, and campus Wi-Fi is never an authorized lab environment.'],
+        ['Late submissions are accepted for thirty days', false, 'The late policy is 10 % per day, nothing accepted after seven days.']] }
+    ]
+  };
+  const LESSON = { 1: '2.5.1 Why prioritize', 2: '2.5.2 Criticality', 3: '2.5.3 Exposure', 4: '2.5.4 Priority and plan', 5: 'Lab 1' };
+  const cards = [];
+  [1, 2, 3, 4, 5].forEach((L) => { (CARDS[L] || []).concat(EXTRA_CARDS[L] || []).forEach(([f, b]) => cards.push({ front: f, back: b, lesson: L })); });
+  const questions = [];
+  [1, 2, 3, 4, 5].forEach((L) => { (QUIZ[L] || []).concat(EXTRA_QUIZ[L] || []).forEach((q) => questions.push(Object.assign({ lesson: L }, q))); });
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const $ = (id) => document.getElementById(id);
+  const nMcq = questions.filter((q) => q.k === 'mcq').length, nMsq = questions.length - nMcq;
+  $('stat-cards').textContent = cards.length + ' flash cards';
+  $('stat-quiz').textContent = questions.length + ' practice questions (' + nMcq + ' single-answer, ' + nMsq + ' multiple-select)';
+  $('quiz-intro-text').textContent = questions.length + ' questions — ' + nMcq + ' single-answer (4 options) and ' + nMsq + ' multiple-select (6 options; the number of expected answers is given in round brackets). One question at a time, with a hint and an explanation for every option.';
+
+  /* ---------- tabs ---------- */
+  window.switchTab = function (id) {
+    document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active')); $(id).classList.add('active');
+    document.querySelectorAll('nav.tabs button').forEach((b) => b.classList.remove('active')); $('btn-' + id).classList.add('active');
+    window.scrollTo({ top: 0 });
+  };
+
+  /* ---------- flash cards ---------- */
+  let filter = 0, deck = cards.slice(), ci = 0;
+  const filt = $('fc-filter');
+  [[0, 'All lessons'], [1, '2.5.1'], [2, '2.5.2'], [3, '2.5.3'], [4, '2.5.4'], [5, 'Lab 1']].forEach(([v, lab]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = lab; b.className = v === filter ? 'on' : '';
+    b.onclick = () => { filter = v; deck = v ? cards.filter((c) => c.lesson === v) : cards.slice(); ci = 0; filt.querySelectorAll('button').forEach((x) => x.classList.remove('on')); b.classList.add('on'); updateCard(); };
+    filt.appendChild(b);
+  });
+  function updateCard() {
+    const c = deck[ci], inner = $('fc-inner'); inner.classList.remove('flipped');
+    setTimeout(() => {
+      $('fc-front').textContent = c.front; $('fc-back').textContent = c.back;
+      $('fc-tag-f').textContent = LESSON[c.lesson]; $('fc-tag-b').textContent = LESSON[c.lesson];
+      $('fc-counter').textContent = (ci + 1) + ' / ' + deck.length; $('fc-progress').style.width = (100 * (ci + 1) / deck.length) + '%';
+    }, 150);
+  }
+  window.nextCard = () => { ci = (ci + 1) % deck.length; updateCard(); };
+  window.prevCard = () => { ci = (ci - 1 + deck.length) % deck.length; updateCard(); };
+  $('fc-inner').addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); $('fc-inner').classList.toggle('flipped'); } });
+  document.addEventListener('keydown', (e) => {
+    if (!$('flashcards').classList.contains('active')) return;
+    const tag = (e.target.tagName || '').toLowerCase(); if (tag === 'input' || tag === 'textarea') return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); nextCard(); } else if (e.key === 'ArrowLeft') { e.preventDefault(); prevCard(); }
+  });
+  updateCard();
+
+  /* ---------- quiz ---------- */
+  let qi = 0, score = 0, picked = new Set(), answered = false; const record = [];
+  window.startQuiz = () => { qi = 0; score = 0; record.length = 0; $('quiz-intro').style.display = 'none'; $('quiz-results').style.display = 'none'; $('quiz-active').style.display = 'block'; renderQuestion(); };
+  function renderQuestion() {
+    const q = questions[qi]; picked = new Set(); answered = false;
+    $('q-progress').textContent = 'Question ' + (qi + 1) + ' of ' + questions.length; $('q-score').textContent = 'Score: ' + score;
+    $('q-stem').textContent = 'Q' + (qi + 1) + '. ' + q.q;
+    $('q-kind').innerHTML = q.k === 'msq' ? 'Multiple-select — <b>' + q.n + ' answers expected (select ' + q.n + ')</b> · 6 options · choose, then press "Check my answer"' : 'Single answer — 4 options · choose one option';
+    $('q-lesson').textContent = 'Lesson ' + LESSON[q.lesson];
+    $('q-hint').textContent = 'Hint: ' + q.hint; $('q-hint').classList.remove('on'); $('hint-btn').textContent = 'Need a hint? 💡';
+    const box = $('q-options'); box.innerHTML = '';
+    q.o.forEach((o, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.dataset.i = i; b.innerHTML = '<span class="t">' + esc(o[0]) + '</span>'; b.onclick = () => select(i); box.appendChild(b); });
+    $('q-feedback').className = 'feedback'; $('q-feedback').innerHTML = '';
+    $('check-btn').style.display = q.k === 'msq' ? 'inline-block' : 'none'; $('check-btn').disabled = true; $('next-btn').style.display = 'none';
+  }
+  function select(i) {
+    if (answered) return; const q = questions[qi];
+    if (q.k === 'mcq') { picked = new Set([i]); reveal(); return; }
+    if (picked.has(i)) picked.delete(i); else { if (picked.size >= q.n) return; picked.add(i); }
+    document.querySelectorAll('#q-options .opt').forEach((b) => b.classList.toggle('sel', picked.has(Number(b.dataset.i))));
+    $('check-btn').disabled = picked.size !== q.n;
+  }
+  window.checkAnswer = () => { if (!answered && picked.size) reveal(); };
+  function reveal() {
+    const q = questions[qi]; answered = true; let right = true;
+    document.querySelectorAll('#q-options .opt').forEach((b) => {
+      const i = Number(b.dataset.i), ok = q.o[i][1], sel = picked.has(i); b.disabled = true; b.classList.remove('sel');
+      if (ok && sel) b.classList.add('ok'); else if (ok && !sel) b.classList.add('miss'); else if (!ok && sel) b.classList.add('bad');
+      if (ok !== sel) right = false;
+      b.innerHTML += '<span class="why">' + (ok ? '✔ Correct option — ' : '✘ Not a correct option — ') + esc(q.o[i][2]) + (ok && !sel ? ' (you did not select it)' : '') + (!ok && sel ? ' (you selected it)' : '') + '</span>';
+    });
+    if (right) score++;
+    record.push({ q, right, picked: Array.from(picked) });
+    const fb = $('q-feedback'); fb.className = 'feedback on ' + (right ? 'good' : 'badf');
+    fb.innerHTML = right ? '<b>Correct.</b> ' + (q.k === 'msq' ? 'All ' + q.n + ' expected answers selected, and nothing else.' : 'The explanation of each option is shown above.') : '<b>Not correct.</b> ' + (q.k === 'msq' ? 'Green = correct and selected; amber = correct but not selected; red = selected but not correct.' : 'The correct option is marked in green; the reason for each option is shown above.');
+    $('q-score').textContent = 'Score: ' + score; $('check-btn').style.display = 'none'; $('next-btn').style.display = 'inline-block';
+    $('next-btn').textContent = qi === questions.length - 1 ? 'See my results' : 'Next question';
+  }
+  window.toggleHint = () => { const h = $('q-hint'); h.classList.toggle('on'); $('hint-btn').textContent = h.classList.contains('on') ? 'Hide the hint' : 'Need a hint? 💡'; };
+  window.nextQuestion = () => { if (qi < questions.length - 1) { qi++; renderQuestion(); window.scrollTo({ top: 0 }); } else showResults(); };
+  function donut(right, total) {
+    const r = 70, c = 2 * Math.PI * r, p = total ? right / total : 0;
+    return '<svg viewBox="0 0 200 200" role="img" aria-label="Score chart"><circle cx="100" cy="100" r="' + r + '" fill="none" stroke="#F8E3E7" stroke-width="26"/>' +
+      '<circle cx="100" cy="100" r="' + r + '" fill="none" stroke="#1E7A6F" stroke-width="26" stroke-dasharray="' + (c * p) + ' ' + (c * (1 - p)) + '" stroke-dashoffset="' + (c * 0.25) + '" stroke-linecap="butt"/>' +
+      '<text x="100" y="96" text-anchor="middle" font-size="30" font-weight="700" fill="#0B3A63" font-family="Cambria, Georgia, serif">' + Math.round(100 * p) + ' %</text>' +
+      '<text x="100" y="120" text-anchor="middle" font-size="12" fill="#6B7686" font-family="Calibri, Arial, sans-serif">' + right + ' of ' + total + ' correct</text></svg>';
+  }
+  function bars() {
+    const rows = [1, 2, 3, 4, 5].map((L) => { const rs = record.filter((r) => r.q.lesson === L); return { L, n: rs.length, ok: rs.filter((r) => r.right).length }; });
+    const h = 26, W = 420, H = rows.length * (h + 14) + 10;
+    let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Score by lesson" font-family="Calibri, Arial, sans-serif" font-size="12">';
+    rows.forEach((r, i) => {
+      const y = 6 + i * (h + 14), w = 220, f = r.n ? r.ok / r.n : 0;
+      s += '<text x="0" y="' + (y + 17) + '" fill="#1B2431" font-weight="700">' + esc(LESSON[r.L]) + '</text>';
+      s += '<rect x="150" y="' + y + '" width="' + w + '" height="' + h + '" rx="6" fill="#F4F6F9"/><rect x="150" y="' + y + '" width="' + Math.max(0, w * f) + '" height="' + h + '" rx="6" fill="' + (f >= 0.6 ? '#1E7A6F' : '#B3122C') + '"/>';
+      s += '<text x="' + (150 + w + 8) + '" y="' + (y + 17) + '" fill="#3E4A5A">' + r.ok + ' / ' + r.n + '</text>';
+    });
+    return s + '</svg>';
+  }
+  function showResults() {
+    $('quiz-active').style.display = 'none'; $('quiz-results').style.display = 'block';
+    const pct = Math.round(100 * score / questions.length);
+    $('result-summary').textContent = score + ' of ' + questions.length + ' correct (' + pct + ' %) — ' + (pct >= 85 ? 'ready for Quiz 2.' : pct >= 60 ? 'passing level; review the lessons where the bar is red.' : 'below 60 %: re-read the lessons with red bars before Quiz 2.');
+    $('chart-donut').innerHTML = donut(score, questions.length); $('chart-bars').innerHTML = bars();
+    $('review').innerHTML = '<h3 style="font-family:var(--serif); color:var(--deep); margin:8px 0">Review every question</h3>' + record.map((r, i) => '<details><summary class="' + (r.right ? '' : 'wrong') + '">' + (r.right ? '✔' : '✘') + ' Q' + (i + 1) + '. ' + esc(r.q.q) + '</summary><ul class="rv">' +
+      r.q.o.map((o, k) => '<li>' + (o[1] ? '✔ ' : '✘ ') + '<b>' + esc(o[0]) + '</b>' + (r.picked.includes(k) ? ' (your choice)' : '') + ' — ' + esc(o[2]) + '</li>').join('') + '</ul></details>').join('');
+    window.scrollTo({ top: 0 });
+  }
+  window.resetQuiz = () => { $('quiz-results').style.display = 'none'; $('quiz-intro').style.display = 'block'; window.scrollTo({ top: 0 }); };
+})();
+</script>
+</body>
+</html>
